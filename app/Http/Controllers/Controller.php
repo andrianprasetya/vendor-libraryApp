@@ -20,7 +20,7 @@ class Controller extends BaseController
         'web' => 'web/',
     ];
     public $views = [
-        'Web' => 'Web/',
+        'web' => 'Web/',
     ];
     public $routes = [
         'web' => 'web::',
