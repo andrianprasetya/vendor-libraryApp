@@ -86,7 +86,7 @@ class MemberController extends Controller
                     "email" => $row->email,
                     "nis" => $row->nis,
                     "birthday" => $row->birthday,
-                    "gender" => $row->gender == 'L' ? "Laki-Laki": $row->gender != null ? "Perempuan" : "",
+                    "gender" => $row->gender == 'L' ? "Laki-Laki" : ($row->gender != null ? "Perempuan" : ""),
                     "address" => $row->address,
                     "districts" => $row->district_id != null ? $row->district->name : '',
                     "regency" => $row->regency_id != null ? $row->regency->name : '',
