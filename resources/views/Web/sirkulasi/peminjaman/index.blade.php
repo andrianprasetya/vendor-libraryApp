@@ -19,7 +19,7 @@
                 {{--<a href="{{ route($route.'.create') }}" class="btn btn-primary">Tambah Anggota</a>--}}
             </div>
             <div class="card-body">
-               {{-- <table id="example1" class="table table-bordered table-striped display nowrap" style="width:100%">
+                <table id="example1" class="table table-bordered table-striped display nowrap" style="width:100%">
                     <thead>
                     <tr>
                         <th class="d-block d-sm-none">Id</th>
@@ -36,7 +36,7 @@
                     </tr>
                     </thead>
                     <tbody></tbody>
-                </table>--}}
+                </table>
             </div>
             <!-- /.card-body -->
         </div>

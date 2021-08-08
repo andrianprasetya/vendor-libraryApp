@@ -40,7 +40,23 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'id',
+        'nis',
+        'name',
+        'email',
+        'password',
+        'address',
+        'province_id',
+        'regency_id',
+        'district_id',
+        'code_pos',
+        'gender',
+        'birthday',
+        'no_telp',
+        'institution',
+        'email',
+        'password',
+        'image',
     ];
 
     /**
@@ -75,5 +91,20 @@ class User extends Authenticatable
     public function userRoles()
     {
         return $this->hasMany(UserRole::class);
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class,'province_id','id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class,'district_id','id');
+    }
+
+    public function regency()
+    {
+        return $this->belongsTo(Regency::class,'regency_id','id');
     }
 }

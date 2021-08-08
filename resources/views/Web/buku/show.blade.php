@@ -19,8 +19,6 @@
                 <h2 class="card-title"><b>Buat Buku</b></h2>
             </div>
             <div class="card-body">
-                <form action="{{route('web::book.store')}}" method="post" enctype="multipart/form-data">
-                    @csrf
                     <div class="form-group row">
                         <div class="col-sm-2">
                             <label>Title</label>
@@ -29,7 +27,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="title" required>
+                            <input type="text" class="form-control" value="{{$data->title}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -46,7 +44,7 @@
                                  </button>
                              </div>--}}
                             <div class="form-group">
-                                <input type="text" class="form-control" name="author" required>
+                                <input type="text" class="form-control" value="{{$data->author}}" readonly>
                             </div>
                         </div>
                     </div>
@@ -58,7 +56,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="SOR" required>
+                            <input type="text" class="form-control" value="{{$data->SOR}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -69,7 +67,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="edition" required>
+                            <input type="text" class="form-control" value="{{$data->edition}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -81,7 +79,7 @@
                         </div>
                         <div class="col-sm-9">
                     <textarea type="text" class="form-control"
-                              name="SDI" required></textarea>
+                              readonly>{{$data->SDI}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -94,41 +92,25 @@
                         <div class="col-sm-9">
                             <div class="form-group row">
                                 <div class="col-md-2">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <input type="button" class="btn btn-primary" data-toggle="modal"
-                                                   data-target="#modal-generator" value="Add New Pattern">
-                                            <span class="input-group-text"><i class="fas fa-tools"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <select class="form-control select2bs4 select-code" name="code" required>
-                                    </select>
+                                    <input class="form-control " value="{{$data->PatternCode->code}}" readonly>
                                 </div>
                                 <div class="col-md-1">
                                     <label>Total items(s):</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="number" class="form-control" name="total_item" required>
+                                    <input type="number" class="form-control" value="{{$data->total_item}}" readonly>
                                 </div>
                                 <div class="col-md-1">
                                     <label>Collection Type:</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <select class="form-control select2bs4" name="collection" required>
-                                        <option value="reference">Reference</option>
-                                        <option value="textbook">Textbook</option>
-                                        <option value="fiction">Fiction</option>
-                                    </select>
+                                    <input type="text" class="form-control" value="{{$data->collection}}" readonly>
                                 </div>
                                 <div class="col-md-1">
                                     <label>Location:</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <select class="form-control" name="location" required>
-                                        <option>My Library</option>
-                                    </select>
+                                    <input type="text" class="form-control" value="{{$data->location}}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +123,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="GMD" required>
+                            <input type="text" class="form-control" value="{{$data->GMD}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -152,7 +134,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="content_type" required>
+                            <input type="text" class="form-control" value="{{$data->content_type}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -163,7 +145,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="media_type" required>
+                            <input type="text" class="form-control" value="{{$data->media_type}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -174,7 +156,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="carrier_type" required>
+                            <input type="text" class="form-control" value="{{$data->carrier_type}}"  readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -185,7 +167,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="frequency" required>
+                            <input type="text" class="form-control" value="{{$data->frequency}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -196,7 +178,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="book_series" required>
+                            <input type="text" class="form-control" value="{{$data->book_series}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -207,7 +189,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="publisher" required>
+                            <input type="text" class="form-control"  value="{{$data->publisher}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -218,7 +200,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="publishing_year" required>
+                            <input type="text" class="form-control" value="{{$data->publishing_year}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -229,7 +211,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="publishing_place" required>
+                            <input type="text" class="form-control" value="{{$data->publishing_place}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -240,7 +222,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="collation" required>
+                            <input type="text" class="form-control" value="{{$data->collation}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -251,7 +233,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="series_title" required>
+                            <input type="text" class="form-control" value="{{$data->series_title}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -262,7 +244,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="classification" required>
+                            <input type="text" class="form-control" value="{{$data->classification}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -273,7 +255,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="call_number" required>
+                            <input type="text" class="form-control" value="{{$data->call_number}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -288,7 +270,7 @@
                                  <input type="button" class="btn btn-primary" value="Add Subject(s)">
                              </div>--}}
                             <div class="form-group row">
-                                <input type="text" class="form-control" name="subject" required>
+                                <input type="text" class="form-control" value="{{$data->subject}}" readonly>
                             </div>
 
                         </div>
@@ -301,10 +283,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <select class="form-control select2bs4 select-language" name="language" required>
-                                <option value="indonesia">Indonesia</option>
-                                <option value="english">English</option>
-                            </select>
+                            <input type="text" class="form-control" value="{{$data->language}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -315,7 +294,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="notes" required>
+                            <input type="text" class="form-control" value="{{$data->notes}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -362,10 +341,6 @@
                              <input type="button" class="btn btn-primary" value="Add Relation">
                          </div>
                      </div>--}}
-                    <div class="float-sm-right">
-                        <input type="submit" class="btn btn-primary" value="Save">
-                    </div>
-                </form>
             </div>
             <!-- /.card-body -->
         </div>
@@ -400,7 +375,7 @@
                                     <label>:</label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <input type="number" class="form-control" name="length" id="length">
+                                    <input type="text" class="form-control" name="length" id="length">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -468,7 +443,7 @@
                 if (length == null) {
                     $('#code').val(prefix);
                 } else {
-                    for (var i = 1; i < length; i++) {
+                    for (var i = 0; i < length; i++) {
                         digit = digit + "0";
                     }
                     $('#code').val(prefix + digit);
@@ -476,7 +451,7 @@
             });
             $('#length').change(function () {
                 length = $('#length').val();
-                for (var i = 1; i < length; i++) {
+                for (var i = 0; i < length; i++) {
                     digit = digit + "0";
                 }
                 $('#code').val(prefix + digit);

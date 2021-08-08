@@ -6,6 +6,7 @@
 <script>
     $.widget.bridge('uibutton', $.ui.button)
 </script>
+<script src="{{ asset('/dashboard/plugins/holder/holder.min.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('/dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- ChartJS -->
@@ -47,6 +48,7 @@
 <script src="{{asset('/dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <script src="{{asset('/dashboard/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <script src="{{asset('/dashboard/plugins/select2/js/select2.full.min.js')}}"></script>
+<script src="{{asset('/dashboard/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 <!-- AdminLTE App -->
 
 @yield('script')

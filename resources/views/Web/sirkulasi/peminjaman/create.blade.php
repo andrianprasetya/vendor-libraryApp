@@ -21,10 +21,10 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="search" class="form-control form-control-lg"
+                            <input type="text" id="searchNIS" class="form-control form-control-lg"
                                    placeholder="NIS SISWA">
                             <div class="input-group-append">
-                                <button type="submit" class="btn btn-lg btn-default">
+                                <button type="submit" id="submitNIS" class="btn btn-lg btn-default">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
@@ -59,14 +59,15 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Kode Buku : </label>
-                            <input type="text" class="form-control"  value="" readonly>
+                            <input type="text" class="form-control" value="" readonly>
                         </div>
                         <div class="float-sm-right">
                             <input type="button" class="btn btn-primary" value="Cari">
                         </div>
                     </div>
                 </div>
-                <table id="example1" class="table table-bordered table-striped" style="width: 50%; margin-top: 30px; display: none;">
+                <table id="example1" class="table table-bordered table-striped"
+                       style="width: 50%; margin-top: 30px; display: none;">
                     <thead>
                     <tr>
                         <th class="d-block d-sm-none">Id</th>
@@ -87,4 +88,23 @@
 
 @endsection
 @push('script')
+    {{--<script>
+        $(function () {
+            $('#submitNIS').on('click', function () {
+                var NIS = $('#searchNIS').val();
+                $.ajax({
+                    url: '{!! route($route.".getDataUser") !!}',
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            id: NIS,
+                        };
+                    },
+                    success: function (data) {
+                        console.log(data)
+                    }
+                });
+            });
+        });
+    </script>--}}
 @endpush

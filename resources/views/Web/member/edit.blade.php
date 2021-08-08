@@ -16,18 +16,18 @@
     <section>
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title"><b>Buat Anggota</b></h2>
+                <h2 class="card-title"><b>Edit</b></h2>
             </div>
             <div class="card-body">
-                <form action="{{route('web::member.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('web::member.update', $data->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label>NIS:</label>
-                        <input type="text" class="form-control" name="nis" required>
+                        <input type="text" class="form-control" name="nis" value="{{$data->nis}}" required>
                     </div>
                     <div class="form-group">
                         <label>Nama:</label>
-                        <input type="text" class="form-control" name="name" required>
+                        <input type="text" class="form-control" name="name" value="{{$data->name}}" required>
                     </div>
                     <div class="row">
                         <div class="col-md-5">
@@ -35,7 +35,7 @@
                                 <label>Alamat:</label>
                                 <textarea type="text" class="form-control"
                                           placeholder="Jln. Rancamanyar no.11 Rt 05 Rw 03"
-                                          name="address" required></textarea>
+                                          name="address" required>{{$data->address}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -45,6 +45,12 @@
                                         <label>Provinsi:</label>
                                         <select class="form-control select2bs4 select-province" name="province"
                                                 style="width: 100%;">
+                                            @foreach($provinces as $key => $province)
+                                                <option
+                                                    value="{{$province->id}}" {{in_array($province->id, $listSelectedProvince ?: []) ? 'selected': ''}}>
+                                                    {{$province->name}}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -53,6 +59,12 @@
                                         <label>Kabupaten:</label>
                                         <select class="form-control select2bs4 select-regency" name="regency"
                                                 style="width: 100%;">
+                                            @foreach($regencies as $key => $regency)
+                                                <option
+                                                    value="{{$regency->id}}" {{in_array($regency->id, $listSelectedRegency ?: []) ? 'selected': ''}}>
+                                                    {{$regency->name}}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -61,13 +73,19 @@
                                         <label>Kecamatan:</label>
                                         <select class="form-control select2bs4 select-district" name="district"
                                                 style="width: 100%;">
+                                            @foreach($districts as $key => $district)
+                                                <option
+                                                    value="{{$district->id}}" {{in_array($district->id, $listSelectedDistrict ?: []) ? 'selected': ''}}>
+                                                    {{$district->name}}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Kode Pos:</label>
-                                        <input type="text" class="form-control" name="code_pos" required>
+                                        <input type="text" class="form-control" name="code_pos" value="{{$data->code_pos}}" required>
                                     </div>
                                 </div>
                             </div>
@@ -97,13 +115,8 @@
                     </div>
                     <div class="form-group">
                         <label>Tanggal Lahir:</label>
-                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"
-                                   name="birthday" required/>
-                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                        </div>
+                            <input type="date" class="form-control datetimepicker-input"
+                                   name="birthday" value="{{$data->birthday}}" required/>
                     </div>
                     <div class="form-group">
                         <label>No. Telepon/Handphone:</label>
@@ -112,25 +125,38 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text" class="form-control" name="no_telp" required>
+                            <input type="text" class="form-control" name="no_telp" value="{{$data->no_telp}}" required>
                         </div>
                         <!-- /.input group -->
                     </div>
                     <div class="form-group">
                         <label>Institusi:</label>
-                        <input type="text" class="form-control" name="institution" required>
+                        <input type="text" class="form-control" name="institution" value="{{$data->institution}}" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputFile">Foto</label>
-                        <input type="file" name="image">
+                        <input type="file" class="invisible" name="image" id="image"
+                               value="{{ old('image') }}"
+                               placeholder="{!! trans('label.image') !!}" accept="image/*">
+                        <img id="preview-image"
+                             src="{{ asset(Storage::url($data->image)) }}"
+                             style="border-radius: 10%;background-position: center center;background-repeat: no-repeat;cursor: pointer;"
+                             @if($isEdit)
+                             data-src="holder.js/2=200x200?text=Klik untuk meng-upload gambar"
+                             @else
+                             data-src="holder.js/400x200?text=Belum ada gambar"
+                             @endif
+                             width="300"
+                             height="300"
+                             class="img-responsives">
                     </div>
                     <div class="form-group">
                         <label>Email:</label>
-                        <input type="email" class="form-control" name="email" required>
+                        <input type="email" class="form-control" name="email" value="{{$data->email}}" required>
                     </div>
                     <div class="form-group">
                         <label>Password:</label>
-                        <input type="password" class="form-control" name="password" required>
+                        <input type="text" class="form-control" name="password" value="{{$data->password}}" required>
                     </div>
                     <div class="float-sm-right">
                         <input type="submit" class="btn btn-primary" value="Simpan">
@@ -145,6 +171,55 @@
 @push('script')
     <script>
         $(function () {
+
+            var previewApk = document.getElementById('preview-image');
+            Holder.run({
+                images: [previewApk]
+            });
+
+            function previewAttachment(input, image) {
+                if (input.files && input.files[0]) {
+                    var imageInfo = [];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $(image).attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    var sizeInKB = Math.floor(input.files[0].size / 1024);
+                    var size = sizeInKB + ' KB';
+                    if (sizeInKB >= 1024) {
+                        var sizeInMB = Math.floor(sizeInKB / 1024);
+                        size = sizeInMB + ' MB';
+                    }
+                    imageInfo['name'] = input.files[0].name;
+                    imageInfo['size'] = size;
+                    return imageInfo;
+                }
+            }
+
+            var CALL = {
+                previewImage: function (input, image) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $(image).attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                },
+            };
+            $(document).on('change', '#image', function () {
+                CALL.previewImage(this, '#preview-image');
+            });
+            $(document).on('click', '#preview-image', function () {
+                $('#image').click();
+            });
+            $(document).on('change', '.input-file', function () {
+                $('#preview-upload-wrapper').slideDown();
+                var imageInfo = previewAttachment(this, '.preview-upload');
+                $('.mailbox-attachment-name').html('<i class="fa fa-camera"></i> ' + trimLength(imageInfo['name'], 15));
+                $('.mailbox-attachment-size').text(imageInfo['size']);
+            });
             //Date picker
             $('#reservationdate').datetimepicker({
                 format: 'L'

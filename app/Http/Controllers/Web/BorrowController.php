@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -38,5 +39,23 @@ class BorrowController extends Controller
             abort(500);
         }
 
+    }
+    public function getDataUser(Request $request){
+        try {
+            dd($request->id);
+            $users = User::query()->where('nis', $request->id)->get();
+            $items = array();
+            foreach ($users as $user) {
+                $items[] = array(
+                    "nis" => $user->id,
+                    "nama" => $user->name,
+                    "created_at" => $user->created_at
+                );
+            }
+            return response()->json($items);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            abort(404);
+        }
     }
 }

@@ -23,9 +23,9 @@ class CreateUsersTable extends Migration
             $table->date('birthday')->nullable();
             $table->string('gender')->nullable();
             $table->string('address')->nullable();
-            $table->string('districts')->nullable();
-            $table->string('regency')->nullable();
-            $table->string('province')->nullable();
+            $table->string('district_id')->nullable();
+            $table->string('regency_id')->nullable();
+            $table->string('province_id')->nullable();
             $table->string('code_pos')->nullable();
             $table->string('institution')->nullable();
             $table->string('no_telp')->nullable();
@@ -33,6 +33,11 @@ class CreateUsersTable extends Migration
 
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('province_id')->on('provinces')->references('id');
+            $table->foreign('regency_id')->on('regencies')->references('id');
+            $table->foreign('district_id')->on('districts')->references('id');
+
         });
     }
 

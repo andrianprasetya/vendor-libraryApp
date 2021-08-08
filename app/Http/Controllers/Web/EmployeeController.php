@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Book;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Regency;
@@ -15,15 +14,15 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
 
-class MemberController extends Controller
+class EmployeeController extends Controller
 {
 
     public function __construct()
     {
-        $this->menu = 'member';
-        $this->slug = $this->slugs['web'] . 'member';
-        $this->route = $this->routes['web'] . 'member';
-        $this->view = $this->views['web'] . 'member';
+        $this->menu = 'karyawan';
+        $this->slug = $this->slugs['web'] . 'karyawan';
+        $this->route = $this->routes['web'] . 'karyawan';
+        $this->view = $this->views['web'] . 'karyawan';
         $this->breadcrumb = '<li class="breadcrumb-item"><a href="' . route($this->route . '.index') . '">' . $this->menu . '</a></li>';
         $this->share();
     }
@@ -56,28 +55,26 @@ class MemberController extends Controller
             $conditions = '1 = 1';
 
             if (!empty($searchValue)) {
-                $conditions .= " AND name ILIKE '%" . trim($searchValue) . "%'";
+                $conditions .= " AND name ILIKE '%" . trim($searchValue) . "%'" . "OR name ILIKE '%" . trim($searchValue) . "%'";
             }
 
             $countAll = User::query()->count();
             $paginate = User::query()->select('*')
-                ->whereHas('roles' , function ($q){
-                    $q->where('slug','=','siswa');
-                })
                 ->whereRaw($conditions)
                 ->orderBy($columnName, $columnSortOrder)
                 ->paginate($limit, ["*"], 'page', $page);
             $items = array();
 
             foreach ($paginate->items() as $idx => $row) {
-                $routeDetail = route("web::member.show", $row['id']);
-                $routeEdit = route("web::member.edit", $row['id']);
+                /*$routeDetail = route("backend::outlet.show", $row['id']);
+                $routeEdit = route("backend::outlet.edit", $row['id']);*/
                 $action = null;
+                /*$select = null;
                 $action .= '<div class="row text-center"><div class="col-md-6">';
                 $action .= '<a href="' . $routeDetail . '" style="margin:10px" class="text-light-blue" data-toggle="tooltip" data-placement="bottom" title="Detail"><i class="fa fa-eye"></i></a>';
                 $action .= '</div><div class="col-md-6">';
                 $action .= '<a href="' . $routeEdit . '" style="margin:10px" class="text-yellow"  data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>';
-                $action .= '</div></div>';
+                $action .= '</div></div>';*/
 
                 $items[] = array(
                     "no" => 1 + $idx . ".",
@@ -245,16 +242,7 @@ class MemberController extends Controller
      */
     public function show($id)
     {
-        try {
-            $isEdit = false;
-            $breadcrumb = $this->breadcrumbs($this->breadcrumb . '<li class="breadcrumb-item active">' . 'Detail Member' . '</li>');
-            $data = User::findOrFail($id);
-            return view($this->view . '.show', compact('breadcrumb', 'data','isEdit'));
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error($e->getMessage());
-            abort(404);
-        }
+        //
     }
 
     /**
@@ -265,40 +253,7 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        try {
-            $isEdit = true;
-            $breadcrumb = $this->breadcrumbs($this->breadcrumb . '<li class="breadcrumb-item active">' . 'Ubah Anggota' . '</li>');
-
-            $data = User::query()->findOrFail($id);
-            $provinces = Province::query()->get();
-            $districts = District::query()->get();
-            $regencies = Regency::query()->get();
-
-            $provinceSelected = $data->province()->get();
-
-            $listSelectedProvince = array();
-            foreach ($provinceSelected as $g) {
-                $listSelectedProvince[$g->id] = $g->id;
-            }
-            $districtSelected = $data->district()->get();
-
-            $listSelectedDistrict = array();
-            foreach ($districtSelected as $g) {
-                $listSelectedDistrict[$g->id] = $g->id;
-            }
-            $regencySelected = $data->regency()->get();
-
-            $listSelectedRegency = array();
-            foreach ($regencySelected as $g) {
-                $listSelectedRegency[$g->id] = $g->id;
-            }
-
-            return view($this->view . '.edit', compact('breadcrumb', 'data','isEdit','provinces','districts','regencies', 'listSelectedProvince',
-                'listSelectedDistrict' , 'listSelectedRegency'));
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            abort(500);
-        }
+        //
     }
 
     /**
@@ -310,50 +265,7 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::beginTransaction();
-
-        try {
-
-            $data = User::query()->findOrFail($id);
-
-            if (Storage::exists($data->image)) {
-                Storage::delete($data->image);
-            }
-
-            $storagePath = "";
-            if ($request->hasFile('image')) {
-                foreach ($request->file() as $files) {
-                    $path = 'public/images';
-                    $storagePath = Storage::disk()->put($path, $files);
-                }
-
-                $data->update([
-                    'nis' => $request->nis,
-                    'name' => $request->name,
-                    'address' => $request->address,
-                    'province_id' => $request->province,
-                    'regency_id' => $request->regency,
-                    'district_id' => $request->district,
-                    'code_pos' => $request->code_pos,
-                    'gender' => $request->gender,
-                    'birthday' => date('d-m-Y', strtotime($request->birthday)),
-                    'no_telp' => $request->no_telp,
-                    'institution' => $request->institution,
-                    'email' => $request->email,
-                    'password' => $request->password,
-                    'image' => $storagePath,
-                ]);
-
-            }
-            DB::commit();
-
-            return redirect()->route($this->route . '.index');
-        } catch
-        (\Exception $e) {
-            DB::rollback();
-            Log::error($e->getMessage());
-            abort(500);
-        }
+        //
     }
 
     /**

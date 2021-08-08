@@ -16,7 +16,7 @@
     <section>
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title"><b>Buat Buku</b></h2>
+                <h2 class="card-title"><b>Edit Buku</b></h2>
             </div>
             <div class="card-body">
                 <form action="{{route('web::book.store')}}" method="post" enctype="multipart/form-data">
