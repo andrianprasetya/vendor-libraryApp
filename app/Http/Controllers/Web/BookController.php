@@ -162,7 +162,7 @@ class BookController extends Controller
             $data = Book::query()->findOrFail($id);
 
 
-            return view($this->view . '.edit', compact('breadcrumb', 'data','isEdit'));
+            return view($this->view . '.edit', compact('breadcrumb', 'data', 'isEdit'));
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             abort(500);
@@ -176,19 +176,16 @@ class BookController extends Controller
         try {
             $ImagePath = "";
             if ($request->hasFile('image')) {
-                foreach ($request->file() as $files) {
-                    $path = 'public/images';
-                    $ImagePath = Storage::disk()->put($path, $files);
-                }
-            }
-            $FilePath = "";
-            if ($request->hasFile('file')) {
-                foreach ($request->file() as $files) {
-                    $path = 'public/images';
-                    $FilePath = Storage::disk()->put($path, $files);
-                }
+                $path = 'public/images';
+                $ImagePath = Storage::disk()->put($path, $request->file('image'));
             }
 
+
+            $FilePath = "";
+            if ($request->hasFile('file')) {
+                $path = 'public/pdf';
+                $FilePath = Storage::disk()->put($path, $request->file('file'));
+            }
             Book::query()->create([
                 'title' => $request->title,
                 'author' => $request->author,
@@ -231,6 +228,7 @@ class BookController extends Controller
             abort(500);
         }
     }
+
     /**
      * Display the specified resource.
      *
@@ -243,7 +241,7 @@ class BookController extends Controller
             $isEdit = false;
             $breadcrumb = $this->breadcrumbs($this->breadcrumb . '<li class="breadcrumb-item active">' . 'Detail Buku' . '</li>');
             $data = Book::findOrFail($id);
-            return view($this->view . '.show', compact('breadcrumb', 'data','isEdit'));
+            return view($this->view . '.show', compact('breadcrumb', 'data', 'isEdit'));
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());

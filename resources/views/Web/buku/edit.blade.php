@@ -29,7 +29,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="title" required>
+                            <input type="text" class="form-control" name="title" value="{{$data->title}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -40,13 +40,8 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            {{-- <div class="form-group">
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
-                                     Add Author
-                                 </button>
-                             </div>--}}
                             <div class="form-group">
-                                <input type="text" class="form-control" name="author" required>
+                                <input type="text" class="form-control" name="author" value="{{$data->author}}" required>
                             </div>
                         </div>
                     </div>
@@ -58,7 +53,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="SOR" required>
+                            <input type="text" class="form-control" name="SOR" value="{{$data->SOR}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -69,7 +64,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="edition" required>
+                            <input type="text" class="form-control" name="edition" value="{{$data->edition}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -81,7 +76,7 @@
                         </div>
                         <div class="col-sm-9">
                     <textarea type="text" class="form-control"
-                              name="SDI" required></textarea>
+                              name="SDI" required>{{$data->SDI}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -93,7 +88,7 @@
                         </div>
                         <div class="col-sm-9">
                             <div class="form-group row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <input type="button" class="btn btn-primary" data-toggle="modal"
@@ -110,26 +105,28 @@
                                     <label>Total items(s):</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="number" class="form-control" name="total_item" required>
+                                    <input type="number" class="form-control" name="total_item" value="{{$data->total_item}}" required>
                                 </div>
                                 <div class="col-md-1">
                                     <label>Collection Type:</label>
                                 </div>
                                 <div class="col-md-2">
                                     <select class="form-control select2bs4" name="collection" required>
-                                        <option value="reference">Reference</option>
-                                        <option value="textbook">Textbook</option>
-                                        <option value="fiction">Fiction</option>
+                                        <option value="reference" {{$data->collection == "reference" ? 'selected':''}}>Reference</option>
+                                        <option value="textbook" {{$data->collection == "textbook" ? 'selected':''}}>Textbook</option>
+                                        <option value="fiction" {{$data->collection == "fiction" ? 'selected':''}}>Fiction</option>
                                     </select>
                                 </div>
-                                <div class="col-md-1">
-                                    <label>Location:</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <select class="form-control" name="location" required>
-                                        <option>My Library</option>
-                                    </select>
-                                </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-md-1">
+                                <label>Location:</label>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-control" name="location"required>
+                                    <option>My Library</option>
+                                </select>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -141,7 +138,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="GMD" required>
+                            <input type="text" class="form-control" name="GMD" value="{{$data->GMD}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -152,7 +149,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="content_type" required>
+                            <input type="text" class="form-control" name="content_type" value="{{$data->content_type}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -163,7 +160,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="media_type" required>
+                            <input type="text" class="form-control" name="media_type" value="{{$data->media_type}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -174,7 +171,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="carrier_type" required>
+                            <input type="text" class="form-control" name="carrier_type" value="{{$data->carrier_type}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -185,7 +182,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="frequency" required>
+                            <input type="text" class="form-control" name="frequency" value="value="{{$data->frequency}}"" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -196,7 +193,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="book_series" required>
+                            <input type="text" class="form-control" name="book_series" value="{{$data->book_series}}"required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -207,7 +204,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="publisher" required>
+                            <input type="text" class="form-control" name="publisher" value="{{$data->publisher}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -218,7 +215,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="publishing_year" required>
+                            <input type="text" class="form-control" name="publishing_year" value="{{$data->publishing_year}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -229,7 +226,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="publishing_place" required>
+                            <input type="text" class="form-control" name="publishing_place" value="{{$data->publishing_place}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -240,7 +237,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="collation" required>
+                            <input type="text" class="form-control" name="collation" value="{{$data->collation}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -251,7 +248,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="series_title" required>
+                            <input type="text" class="form-control" name="series_title" value="{{$data->series_title}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -262,7 +259,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="classification" required>
+                            <input type="text" class="form-control" name="classification" value="{{$data->classification}}"required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -273,7 +270,7 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="call_number" required>
+                            <input type="text" class="form-control" name="call_number" value="{{$data->call_number}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -284,11 +281,8 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            {{-- <div class="form-group row">
-                                 <input type="button" class="btn btn-primary" value="Add Subject(s)">
-                             </div>--}}
                             <div class="form-group row">
-                                <input type="text" class="form-control" name="subject" required>
+                                <input type="text" class="form-control" name="subject" value="{{$data->subject}}" required>
                             </div>
 
                         </div>
@@ -302,8 +296,8 @@
                         </div>
                         <div class="col-sm-5">
                             <select class="form-control select2bs4 select-language" name="language" required>
-                                <option value="indonesia">Indonesia</option>
-                                <option value="english">English</option>
+                                <option value="indonesia" {{$data->language == "indonesia" ? 'selected' : ''}}>Indonesia</option>
+                                <option value="english" {{$data->language == "indonesia" ? 'english' : ''}}>English</option>
                             </select>
                         </div>
                     </div>
@@ -315,26 +309,25 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="notes" required>
+                            <input type="text" class="form-control" name="notes" value="{{$data->notes}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Image:</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
                         <div class="col-sm-4">
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="image" id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Upload</span>
-                                </div>
-                            </div>
+                            <input type="file" class="invisible" name="image" id="image"
+                                   value="{{ old('image') }}"
+                                   placeholder="{!! trans('label.image') !!}" accept="image/*">
+                            <img id="preview-image"
+                                 src="{{ asset(Storage::url($data->image)) }}"
+                                 style="border-radius: 10%;background-position: center center;background-repeat: no-repeat;cursor: pointer;"
+                                 @if($isEdit)
+                                 data-src="holder.js/2=200x200?text=Klik untuk meng-upload gambar"
+                                 @else
+                                 data-src="holder.js/200x200?text=Belum ada gambar"
+                                 @endif
+                                 width="300"
+                                 height="300"
+                                 class="img-responsives">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -459,6 +452,55 @@
 @push('script')
     <script>
         $(function () {
+            var previewApk = document.getElementById('preview-image');
+            Holder.run({
+                images: [previewApk]
+            });
+
+            function previewAttachment(input, image) {
+                if (input.files && input.files[0]) {
+                    var imageInfo = [];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $(image).attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    var sizeInKB = Math.floor(input.files[0].size / 1024);
+                    var size = sizeInKB + ' KB';
+                    if (sizeInKB >= 1024) {
+                        var sizeInMB = Math.floor(sizeInKB / 1024);
+                        size = sizeInMB + ' MB';
+                    }
+                    imageInfo['name'] = input.files[0].name;
+                    imageInfo['size'] = size;
+                    return imageInfo;
+                }
+            }
+
+            var CALL = {
+                previewImage: function (input, image) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $(image).attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                },
+            };
+            $(document).on('change', '#image', function () {
+                CALL.previewImage(this, '#preview-image');
+            });
+            $(document).on('click', '#preview-image', function () {
+                $('#image').click();
+            });
+            $(document).on('change', '.input-file', function () {
+                $('#preview-upload-wrapper').slideDown();
+                var imageInfo = previewAttachment(this, '.preview-upload');
+                $('.mailbox-attachment-name').html('<i class="fa fa-camera"></i> ' + trimLength(imageInfo['name'], 15));
+                $('.mailbox-attachment-size').text(imageInfo['size']);
+            });
+
             var prefix = $('#prefix').val();
             var length;
             var digit = "0";

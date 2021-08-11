@@ -9,6 +9,7 @@ use App\Models\Province;
 use App\Models\Regency;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -215,6 +216,7 @@ class MemberController extends Controller
                     'email' => $request->email,
                     'password' => $request->password,
                     'image' => $storagePath,
+                    'expire' => Carbon::now('Asia/Jakarta')->addDay(30)->format('Y-m-d')
                 ]);
 
                 $roleSiswa = Role::query()->where('slug', '=', 'siswa')->first();

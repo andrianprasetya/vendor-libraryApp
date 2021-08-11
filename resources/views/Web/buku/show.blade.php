@@ -298,22 +298,18 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Image:</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
                         <div class="col-sm-4">
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="image" id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Upload</span>
-                                </div>
-                            </div>
+                            <img id="preview-image"
+                                 src="{{ asset(Storage::url($data->image)) }}"
+                                 style="border-radius: 10%;background-position: center center;background-repeat: no-repeat;cursor: pointer;"
+                                 @if($isEdit)
+                                 data-src="holder.js/2=200x200?text=Klik untuk meng-upload gambar"
+                                 @else
+                                 data-src="holder.js/200x200?text=Belum ada gambar"
+                                 @endif
+                                 width="300"
+                                 height="300"
+                                 class="img-responsives">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -434,6 +430,55 @@
 @push('script')
     <script>
         $(function () {
+            var previewApk = document.getElementById('preview-image');
+            Holder.run({
+                images: [previewApk]
+            });
+
+            function previewAttachment(input, image) {
+                if (input.files && input.files[0]) {
+                    var imageInfo = [];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $(image).attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    var sizeInKB = Math.floor(input.files[0].size / 1024);
+                    var size = sizeInKB + ' KB';
+                    if (sizeInKB >= 1024) {
+                        var sizeInMB = Math.floor(sizeInKB / 1024);
+                        size = sizeInMB + ' MB';
+                    }
+                    imageInfo['name'] = input.files[0].name;
+                    imageInfo['size'] = size;
+                    return imageInfo;
+                }
+            }
+
+            var CALL = {
+                previewImage: function (input, image) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $(image).attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                },
+            };
+            $(document).on('change', '#image', function () {
+                CALL.previewImage(this, '#preview-image');
+            });
+            $(document).on('click', '#preview-image', function () {
+                $('#image').click();
+            });
+            $(document).on('change', '.input-file', function () {
+                $('#preview-upload-wrapper').slideDown();
+                var imageInfo = previewAttachment(this, '.preview-upload');
+                $('.mailbox-attachment-name').html('<i class="fa fa-camera"></i> ' + trimLength(imageInfo['name'], 15));
+                $('.mailbox-attachment-size').text(imageInfo['size']);
+            });
+
             var prefix = $('#prefix').val();
             var length;
             var digit = "0";

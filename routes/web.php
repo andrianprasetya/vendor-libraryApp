@@ -61,9 +61,13 @@ Route::group(['as' => 'web::', 'prefix' => 'web', 'namespace' => 'Web', 'middlew
 
     Route::group(['as' => 'sirkulasi.', 'prefix' => 'sirkulasi'], function () {
         Route::group(['as' => 'peminjaman.', 'prefix' => 'peminjaman'], function () {
-            Route::get('/', ['as' => 'index', 'uses' => 'BorrowController@create']);
-            Route::get('getDataUser', ['as' => 'getDataUser', 'uses' => 'BorrowController@getDataUser']);
-            Route::get('datatables', ['as' => 'datatables', 'uses' => 'BorrowController@getDatatable']);
+            Route::get('/', ['as' => 'index', 'uses' => 'LoanController@index']);
+            Route::get('create', ['as' => 'create', 'uses' => 'LoanController@create']);
+            Route::get('getDataUser', ['as' => 'getDataUser', 'uses' => 'LoanController@getDataUser']);
+            Route::get('getDataBook', ['as' => 'getDataBook', 'uses' => 'LoanController@getDataBook']);
+            Route::get('datatableSingles', ['as' => 'datatableSingles', 'uses' => 'LoanController@getDatatableSingle']);
+            Route::get('datatables', ['as' => 'datatables', 'uses' => 'LoanController@getDatatable']);
+            Route::post('store', ['as' => 'store' , 'uses' => 'LoanController@store']);
         });
         Route::group(['as' => 'pengembalian.', 'prefix' => 'pengembalian'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'ReturnController@index']);

@@ -23,7 +23,6 @@ class UserMenuSeeder extends Seeder
         $name = 'Kelola User';
         $menus = [
             'Member',
-            'Karyawan',
         ];
         $parent = $menu->create([
             'name' => $name,

@@ -12,10 +12,6 @@ return [
             'index' => 'index',
             'action' => ['index', 'detail', 'create', 'edit', 'status'],
         ],
-        'web/karyawan' => [
-            'index' => 'index',
-            'action' => ['index', 'detail', 'create', 'edit'],
-        ],
         'web/dashboard' => [
             'index' => 'index',
             'action' => ['index'],
