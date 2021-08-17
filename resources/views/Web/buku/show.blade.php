@@ -172,7 +172,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>Book series</label>
+                            <label>ISBN/ISSN</label>
                         </div>
                         <div class="col-sm-1">
                             <label>:</label>

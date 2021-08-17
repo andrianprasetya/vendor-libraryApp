@@ -40,27 +40,12 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            {{-- <div class="form-group">
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
-                                     Add Author
-                                 </button>
-                             </div>--}}
                             <div class="form-group">
                                 <input type="text" class="form-control" name="author" required>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Statement Of Responsibility</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" name="SOR" required>
-                        </div>
-                    </div>
+
                     <div class="form-group row">
                         <div class="col-sm-2">
                             <label>Edition</label>
@@ -70,18 +55,6 @@
                         </div>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" name="edition" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>specific detail info</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-9">
-                    <textarea type="text" class="form-control"
-                              name="SDI" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -148,17 +121,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>Content Type</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="content_type" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
                             <label>Media Type</label>
                         </div>
                         <div class="col-sm-1">
@@ -170,29 +132,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>Carrier Type</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" name="carrier_type" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Frequency</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" name="frequency" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Book series</label>
+                            <label>ISBN/ISSN</label>
                         </div>
                         <div class="col-sm-1">
                             <label>:</label>
@@ -236,28 +176,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>collation</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="collation" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>series title</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="series_title" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
                             <label>Classification</label>
                         </div>
                         <div class="col-sm-1">
@@ -276,23 +194,6 @@
                         </div>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" name="call_number" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Subject</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-9">
-                            {{-- <div class="form-group row">
-                                 <input type="button" class="btn btn-primary" value="Add Subject(s)">
-                             </div>--}}
-                            <div class="form-group row">
-                                <input type="text" class="form-control" name="subject" required>
-                            </div>
-
                         </div>
                     </div>
                     <div class="form-group row">
@@ -345,17 +246,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="form-group row">
-                         <div class="col-sm-2">
-                             <label>Data Biblio Terkait:</label>
-                         </div>
-                         <div class="col-sm-1">
-                             <label>:</label>
-                         </div>
-                         <div class="col-sm-9">
-                             <input type="button" class="btn btn-primary" value="Add Relation">
-                         </div>
-                     </div>--}}
                     <div class="float-sm-right">
                         <input type="submit" class="btn btn-primary" value="Save">
                     </div>

@@ -24,7 +24,7 @@
                     <tr>
                         <th class="d-block d-sm-none">Id</th>
                         <th>No</th>
-                        <th>Book Series</th>
+                        <th>ISBN / ISSN</th>
                         <th>Title</th>
                         <th>Author</th>
                         <th>Code</th>

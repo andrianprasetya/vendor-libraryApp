@@ -189,32 +189,23 @@ class BookController extends Controller
             Book::query()->create([
                 'title' => $request->title,
                 'author' => $request->author,
-                'SOR' => $request->SOR,
                 'edition' => $request->edition,
-                'SDI' => $request->SDI,
                 'code_pattern_id' => $request->code,
                 'total_item' => $request->total_item,
                 'collection' => $request->collection,
                 'location' => $request->location,
                 'GMD' => $request->GMD,
-                'content_type' => $request->content_type,
                 'media_type' => $request->media_type,
-                'carrier_type' => $request->carrier_type,
-                'frequency' => $request->frequency,
                 'book_series' => $request->book_series,
                 'publisher' => $request->publisher,
                 'publishing_year' => $request->publishing_year,
                 'publishing_place' => $request->publishing_place,
-                'collation' => $request->collation,
-                'series_title' => $request->series_title,
                 'classification' => $request->classification,
                 'call_number' => $request->call_number,
-                'subject' => $request->subject,
                 'language' => $request->language,
                 'notes' => $request->notes,
                 'image' => $ImagePath,
                 'file' => $FilePath,
-                'biblio_data' => $request->biblio_data
             ]);
 
 
@@ -246,6 +237,61 @@ class BookController extends Controller
             DB::rollback();
             Log::error($e->getMessage());
             abort(404);
+        }
+    }
+
+    public function update($id, Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $data = Book::query()->findOrFail($id);
+
+            if (Storage::exists($data->image)) {
+                Storage::delete($data->image);
+            }
+
+            $ImagePath = "";
+            if ($request->hasFile('image')) {
+                $path = 'public/images';
+                $ImagePath = Storage::disk()->put($path, $request->file('image'));
+            }
+
+            if (Storage::exists($data->file)) {
+                Storage::delete($data->file);
+            }
+            $FilePath = "";
+            if ($request->hasFile('file')) {
+                $path = 'public/pdf';
+                $FilePath = Storage::disk()->put($path, $request->file('file'));
+            }
+            $data->update([
+                'title' => $request->title,
+                'author' => $request->author,
+                'edition' => $request->edition,
+                'code_pattern_id' => $request->code,
+                'total_item' => $request->total_item,
+                'collection' => $request->collection,
+                'location' => $request->location,
+                'GMD' => $request->GMD,
+                'media_type' => $request->media_type,
+                'book_series' => $request->book_series,
+                'publisher' => $request->publisher,
+                'publishing_year' => $request->publishing_year,
+                'publishing_place' => $request->publishing_place,
+                'classification' => $request->classification,
+                'call_number' => $request->call_number,
+                'language' => $request->language,
+                'notes' => $request->notes,
+                'image' => $ImagePath,
+                'file' => $FilePath,
+            ]);
+
+
+            DB::commit();
+
+            return redirect()->route($this->route . '.index');
+        } catch (\Exception $e) {
+
         }
     }
 }

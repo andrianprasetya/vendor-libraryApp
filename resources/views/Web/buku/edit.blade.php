@@ -19,7 +19,7 @@
                 <h2 class="card-title"><b>Edit Buku</b></h2>
             </div>
             <div class="card-body">
-                <form action="{{route('web::book.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('web::book.update', $data->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-2">
@@ -47,17 +47,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>Statement Of Responsibility</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" name="SOR" value="{{$data->SOR}}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
                             <label>Edition</label>
                         </div>
                         <div class="col-sm-1">
@@ -65,18 +54,6 @@
                         </div>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" name="edition" value="{{$data->edition}}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>specific detail info</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-9">
-                    <textarea type="text" class="form-control"
-                              name="SDI" required>{{$data->SDI}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -143,17 +120,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>Content Type</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="content_type" value="{{$data->content_type}}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
                             <label>Media Type</label>
                         </div>
                         <div class="col-sm-1">
@@ -165,35 +131,13 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>Carrier Type</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" name="carrier_type" value="{{$data->carrier_type}}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Frequency</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" name="frequency" value="value="{{$data->frequency}}"" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Book series</label>
+                            <label>ISBN/ISSN</label>
                         </div>
                         <div class="col-sm-1">
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="book_series" value="{{$data->book_series}}"required>
+                            <input type="text" class="form-control" name="book_series" value="{{$data->book_series}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -231,17 +175,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>collation</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="collation" value="{{$data->collation}}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
                             <label>series title</label>
                         </div>
                         <div class="col-sm-1">
@@ -271,20 +204,6 @@
                         </div>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" name="call_number" value="{{$data->call_number}}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Subject</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="form-group row">
-                                <input type="text" class="form-control" name="subject" value="{{$data->subject}}" required>
-                            </div>
-
                         </div>
                     </div>
                     <div class="form-group row">
@@ -344,17 +263,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="form-group row">
-                         <div class="col-sm-2">
-                             <label>Data Biblio Terkait:</label>
-                         </div>
-                         <div class="col-sm-1">
-                             <label>:</label>
-                         </div>
-                         <div class="col-sm-9">
-                             <input type="button" class="btn btn-primary" value="Add Relation">
-                         </div>
-                     </div>--}}
                     <div class="float-sm-right">
                         <input type="submit" class="btn btn-primary" value="Save">
                     </div>

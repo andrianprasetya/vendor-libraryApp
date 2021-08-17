@@ -36,32 +36,23 @@ class Book extends Model
         'id',
         'title',
         'author',
-        'SOR',
         'edition',
-        'SDI',
         'code_pattern_id',
         'total_item',
         'collection',
         'location',
         'GMD',
-        'content_type',
         'media_type',
-        'carrier_type',
-        'frequency',
         'book_series',
         'publisher',
         'publishing_year',
         'publishing_place',
-        'collation',
-        'series_title',
         'classification',
         'call_number',
-        'subject',
         'language',
         'notes',
         'image',
-        'file',
-        'biblio_data'];
+        'file',];
 
     public function PatternCode()
     {

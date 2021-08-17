@@ -49,23 +49,13 @@ Route::group(['as' => 'web::', 'prefix' => 'web', 'namespace' => 'Web', 'middlew
         Route::post('update/{id}', ['as' => 'update' ,'middleware' => 'access:index,web/member', 'uses' => 'MemberController@update']);
     });
 
-    Route::group(['as' => 'karyawan.', 'prefix' => 'karyawan'], function () {
-        Route::get('/', ['as' => 'index','middleware' => 'access:index,web/karyawan', 'uses' => 'EmployeeController@index']);
-        Route::get('datatables', ['as' => 'datatables','middleware' => 'access:index,web/karyawan', 'uses' => 'EmployeeController@getDatatable']);
-        Route::get('create', ['as' => 'create', 'middleware' => 'access:index,web/karyawan', 'uses' => 'EmployeeController@create']);
-        Route::get('getProvince', ['as' => 'getProvince', 'middleware' => 'access:index,web/karyawan', 'uses' => 'EmployeeController@getProvince']);
-        Route::get('getDistrict', ['as' => 'getDistrict', 'middleware' => 'access:index,web/karyawan', 'uses' => 'EmployeeController@getDistrict']);
-        Route::get('getRegency', ['as' => 'getRegency', 'middleware' => 'access:index,web/karyawan', 'uses' => 'EmployeeController@getRegency']);
-        Route::post('store', ['as' => 'store' , 'middleware' => 'access:index,web/karyawan', 'uses' => 'EmployeeController@store']);
-    });
-
     Route::group(['as' => 'sirkulasi.', 'prefix' => 'sirkulasi'], function () {
         Route::group(['as' => 'peminjaman.', 'prefix' => 'peminjaman'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'LoanController@index']);
             Route::get('create', ['as' => 'create', 'uses' => 'LoanController@create']);
             Route::get('getDataUser', ['as' => 'getDataUser', 'uses' => 'LoanController@getDataUser']);
             Route::get('getDataBook', ['as' => 'getDataBook', 'uses' => 'LoanController@getDataBook']);
-            Route::get('datatableSingles', ['as' => 'datatableSingles', 'uses' => 'LoanController@getDatatableSingle']);
+            Route::get('datatableSingle', ['as' => 'datatableSingle', 'uses' => 'LoanController@getDatatableSingle']);
             Route::get('datatables', ['as' => 'datatables', 'uses' => 'LoanController@getDatatable']);
             Route::post('store', ['as' => 'store' , 'uses' => 'LoanController@store']);
         });
@@ -87,6 +77,7 @@ Route::group(['as' => 'web::', 'prefix' => 'web', 'namespace' => 'Web', 'middlew
         Route::get('show/{id}', ['as' => 'show', 'uses' => 'BookController@show']);
         Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'BookController@edit']);
         Route::post('store', ['as' => 'store', 'uses' => 'BookController@store']);
+        Route::post('update/{id}', ['as' => 'update' , 'uses' => 'BookControllerr@update']);
         Route::post('pattern_book' , ['as' => 'pattern_book' , 'uses' => 'BookController@pattern_book']);
         Route::get('getCode', ['as' => 'getCode', 'uses' => 'BookController@getCode']);
     });
