@@ -150,6 +150,11 @@ class LoanController extends Controller
             $items = array();
 
             foreach ($paginate->items() as $idx => $row) {
+                $routeDetail = $row->is_returned == "t" ? "#":route("web::sirkulasi.peminjaman.show", $row['id']);
+                $action = null;
+                $action .= '<div class="row text-center"><div class="col-md-6">';
+                $action .= '<a href="' . $routeDetail . '" style="margin:10px" class="text-light-blue disabled" data-toggle="tooltip" data-placement="bottom" title="Detail"><i class="fas fa-arrow-circle-right"></i></a>';
+                $action .= '</div></div>';
                 $items[] = array(
                     "no" => 1 + $idx . ".",
                     "id" => $row->id,
@@ -158,7 +163,8 @@ class LoanController extends Controller
                     "date_loan" => $row->tgl_peminjaman,
                     "deadline" => $row->deadline,
                     "date_return" => $row->tgl_pengembalian,
-                    "is_returned" => $row->is_returned
+                    "is_returned" => $row->is_returned,
+                    "action" => $action
                 );
             }
             $response = array(
@@ -192,6 +198,64 @@ class LoanController extends Controller
             return redirect()->route($this->route . '.index');
         } catch
         (\Exception $e) {
+            DB::rollback();
+            Log::error($e->getMessage());
+            abort(500);
+        }
+    }
+
+    public function show($id)
+    {
+        try {
+
+            $breadcrumb = $this->breadcrumbs($this->breadcrumb . '<li class="breadcrumb-item active">' . 'Pengembalian Buku' . '</li>');
+            $data = Loan::query()->findOrFail($id);
+            $date1 = strtotime($data->tgl_deadline);
+            $date2 = strtotime(\Carbon\Carbon::now()->format('Y-m-d'));
+
+            $diff = null;
+
+
+            return view($this->view . '.show', compact('breadcrumb', 'data','diff'));
+
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            abort(500);
+        }
+    }
+
+    public function return(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $item = Loan::query()->findOrFail($id);
+
+            $item->update([
+                'tgl_pengembalian' => Carbon::now()->format('Y-m-d'),
+                'is_returned' => true
+            ]);
+            DB::commit();
+            return redirect()->route($this->route . '.index');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error($e->getMessage());
+            abort(500);
+        }
+    }
+
+    public function denda(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $item = Loan::query()->findOrFail($id);
+
+            $item->update([
+                'tgl_pengembalian' => Carbon::now()->format('Y-m-d'),
+                'is_returned' => true
+            ]);
+            DB::commit();
+            return redirect()->route($this->route . '.index');
+        } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
             abort(500);

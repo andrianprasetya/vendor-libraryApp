@@ -24,7 +24,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>99999999</h3>
+                    <h3>{{$book_count_all}}</h3>
 
                     <p>Koleksi</p>
                 </div>
@@ -54,7 +54,7 @@
             <!-- small box -->
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>44</h3>
+                    <h3>{{$member_count_all}}</h3>
 
                     <p>Jumlah Anggota</p>
                 </div>

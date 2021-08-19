@@ -47,8 +47,6 @@ class UserMenuSeeder extends Seeder
         $name = 'Sirkulasi Menu';
         $menus = [
             'Peminjaman',
-            'Pengembalian',
-            'Perpanjangan',
         ];
         $parent = $menu->create([
             'name' => $name,

@@ -58,6 +58,9 @@ Route::group(['as' => 'web::', 'prefix' => 'web', 'namespace' => 'Web', 'middlew
             Route::get('datatableSingle', ['as' => 'datatableSingle', 'uses' => 'LoanController@getDatatableSingle']);
             Route::get('datatables', ['as' => 'datatables', 'uses' => 'LoanController@getDatatable']);
             Route::post('store', ['as' => 'store' , 'uses' => 'LoanController@store']);
+            Route::get('show/{id}', ['as' => 'show' , 'uses' => 'LoanController@show']);
+            Route::post('return/{id}', ['as' => 'return' , 'uses' => 'LoanController@return']);
+            Route::post('denda/{id}', ['as' => 'denda' , 'uses' => 'LoanController@denda']);
         });
         Route::group(['as' => 'pengembalian.', 'prefix' => 'pengembalian'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'ReturnController@index']);

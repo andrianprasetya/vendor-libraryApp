@@ -308,35 +308,6 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-    {{--<div class="modal fade" id="modal-xl">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Tambah Author</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <div class="col-sm-1">
-                            <label>Nama</label>
-                        </div>
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" name="name">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>--}}
-    <!-- /.modal -->
     </section>
 
 @endsection

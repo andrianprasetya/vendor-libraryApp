@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -28,6 +30,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view($this->view.'.index');
+        $book_count_all = Book::query()->count();
+        $member_count_all = User::query()->count();
+
+        return view($this->view.'.index', compact('book_count_all','member_count_all'));
     }
 }

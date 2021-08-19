@@ -214,7 +214,7 @@ class MemberController extends Controller
                     'no_telp' => $request->no_telp,
                     'institution' => $request->institution,
                     'email' => $request->email,
-                    'password' => $request->password,
+                    'password' => \Illuminate\Support\Facades\Hash::make($request->password),
                     'image' => $storagePath,
                     'expire' => Carbon::now('Asia/Jakarta')->addDay(30)->format('Y-m-d')
                 ]);

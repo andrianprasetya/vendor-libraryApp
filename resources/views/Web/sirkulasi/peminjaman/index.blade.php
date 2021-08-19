@@ -30,6 +30,7 @@
                         <th>Waktu Kembali</th>
                         <th>Tanggal Kembali</th>
                         <th>Telah Kembali</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody></tbody>
@@ -69,7 +70,8 @@
                     {data: 'date_loan'},
                     {data: 'deadline'},
                     {data: 'date_return'},
-                    {data: 'is_returned'}
+                    {data: 'is_returned'},
+                    {data: 'action'}
 
                 ],
                 order: [[0, "asc"]],
@@ -81,7 +83,8 @@
                     {targets: 4, sortable: true, orderable: true},
                     {targets: 5, sortable: true, orderable: true},
                     {targets: 6, sortable: true, orderable: true},
-                    {targets: 7, sortable: true, orderable: true}
+                    {targets: 7, sortable: true, orderable: true},
+                    {targets: 8, sortable: false, orderable: false, width: '5%', className: 'text-center'}
                 ],
             });
         })
