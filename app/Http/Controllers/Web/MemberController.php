@@ -210,7 +210,7 @@ class MemberController extends Controller
                     'district_id' => $request->district,
                     'code_pos' => $request->code_pos,
                     'gender' => $request->gender,
-                    'birthday' => date('d-m-Y', strtotime($request->birthday)),
+                    'birthday' => date('Y-m-d', strtotime($request->birthday)),
                     'no_telp' => $request->no_telp,
                     'institution' => $request->institution,
                     'email' => $request->email,
