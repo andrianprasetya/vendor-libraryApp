@@ -92,8 +92,6 @@ class LoanController extends Controller
             $length = $request->input('length');
             $page = (int)$start > 0 ? ($start / $length) + 1 : 1;
             $limit = (int)$length > 0 ? $length : 10;
-            $columnIndex = $request->input('order')[0]['column'];
-            $columnSortOrder = $request->input('order')[0]['dir'];
 
             $conditions = '1 = 1';
 
