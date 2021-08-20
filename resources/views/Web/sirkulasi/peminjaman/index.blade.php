@@ -43,7 +43,7 @@
 @endsection
 @push('script')
     <script>
-        $(function (){
+        $(function () {
             $('#peminjaman').DataTable({
                 serverSide: true,
                 lengthChange: false,
@@ -55,7 +55,7 @@
                 },
                 info: false,
                 responsive: true,
-                ajax:  '{!! route($route.".datatables") !!}',
+                ajax: '{!! route($route.".datatables") !!}',
                 columns: [
                     {
                         data: 'id',
@@ -70,7 +70,19 @@
                     {data: 'date_loan'},
                     {data: 'deadline'},
                     {data: 'date_return'},
-                    {data: 'is_returned'},
+                    {
+                        data: 'is_returned',
+                        render: function (data) {
+                            var icon = '';
+                            if (data == true) {
+                                icon = 'fas fa-check';
+                            }
+                            if (data == false) {
+                                icon = 'fas fa-times';
+                            }
+                            return '<i class="  ' + icon + '"></i>';
+                        }
+                    },
                     {data: 'action'}
 
                 ],
@@ -83,7 +95,7 @@
                     {targets: 4, sortable: true, orderable: true},
                     {targets: 5, sortable: true, orderable: true},
                     {targets: 6, sortable: true, orderable: true},
-                    {targets: 7, sortable: true, orderable: true},
+                    {targets: 7, sortable: true, orderable: true ,  className: 'text-center'},
                     {targets: 8, sortable: false, orderable: false, width: '5%', className: 'text-center'}
                 ],
             });

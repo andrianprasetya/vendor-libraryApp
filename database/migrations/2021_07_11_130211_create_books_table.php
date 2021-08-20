@@ -18,9 +18,7 @@ class CreateBooksTable extends Migration
             $table->string('title')->nullable();
             $table->string('author')->nullable();
             $table->string('edition')->nullable();
-            $table->uuid('code_pattern_id')->nullable();
-            $table->foreign('code_pattern_id')->on('pattern_books')->references('id');
-            $table->integer('total_item')->nullable();
+            $table->string('code')->nullable();
             $table->string('collection')->nullable();
             $table->string('location')->nullable();
             $table->string('GMD')->nullable();

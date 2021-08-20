@@ -22,7 +22,7 @@ class CreateLoansTable extends Migration
             $table->date('tgl_peminjaman')->nullable();
             $table->date('deadline')->nullable();
             $table->date('tgl_pengembalian')->nullable();
-            $table->boolean('is_returned')->nullable();
+            $table->boolean('is_returned')->nullable()->default(false);
             $table->timestamps();
         });
     }

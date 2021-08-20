@@ -32,7 +32,6 @@
                         <th>Publishing Year</th>
                         <th>Publishing Place</th>
                         <th>Language</th>
-                        <th>Item</th>
                         <th class="text-center">Action</th>
                     </tr>
                     </thead>
@@ -84,7 +83,6 @@
                     {data: 'publishing_year'},
                     {data: 'publishing_place'},
                     {data: 'language'},
-                    {data: 'total_item'},
                     {data: 'action'}
 
                 ],
@@ -99,8 +97,7 @@
                     {targets: 6, sortable: true, orderable: true},
                     {targets: 7, sortable: true, orderable: true},
                     {targets: 9, sortable: true, orderable: true},
-                    {targets: 10, sortable: true, orderable: true},
-                    {targets: 11, orderable: false, searchable: false, width: '10%', className: 'center action'}
+                    {targets: 10, orderable: false, searchable: false, width: '10%', className: 'center action'}
                 ],
             });
         });

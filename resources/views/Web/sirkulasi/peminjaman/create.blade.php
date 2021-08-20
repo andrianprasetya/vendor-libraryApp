@@ -60,28 +60,31 @@
                                 <thead>
                                 <tr>
                                     <th class="d-block d-sm-none">Id</th>
-                                    <th>No</th>
                                     <th>Kode</th>
                                     <th>Judul</th>
                                     <th>Waktu Peminjaman</th>
                                     <th>Waktu Kembali</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody id="table-body">
+                                </tbody>
                             </table>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Book Call Number : </label>
-                                <input type="text" class="form-control" id="call_number">
+                                <label>Kode Buku : </label>
+                                <input type="text" class="form-control" id="code">
                             </div>
-                            <div class="float-sm-right">
-                                <input type="button" class="btn btn-primary" id="find_book" value="Cari">
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    <input type="button" class="btn btn-primary" id="find_book" value="Cari">
+                                </div>
                             </div>
                         </div>
                     </div>
                     <input type="text" class="form-control" id="book_id" name="book_id" style="display: none">
-                    <input type="text" class="form-control" id="book_series" name="book_series" style="display: none">
+                    <input type="text" class="form-control" id="code" name="code" style="display: none">
                     <input type="text" class="form-control" id="title" name="title" style="display: none">
                     <input type="text" class="form-control" id="date_loan" name="date_loan" style="display: none">
                     <input type="text" class="form-control" id="deadline" name="deadline" style="display: none">
@@ -99,6 +102,8 @@
 @endsection
 @push('script')
     <script>
+
+        var count = 0;
         $(function () {
             var NIS = "";
             $('#submitNIS').on('click', function () {
@@ -117,69 +122,62 @@
                     }
                 });
             });
+
             $('#find_book').on('click', function () {
-                var call_number = $('#call_number').val();
+                var code = $('#code').val();
                 $.ajax({
                     url: '{!! route($route.".getDataBook") !!}',
                     dataType: 'json',
                     data: {
-                        call_number: call_number,
+                        code: code,
                     },
                     success: function (data) {
                         $('#book_id').val(data.id);
-                        $('#book_series').val(data.book_series);
+                        $('#code').val(data.code);
                         $('#title').val(data.title);
                         $('#date_loan').val(data.date_loan);
                         $('#deadline').val(data.deadline);
-                    }
-                });
-                $('#peminjaman').show('slow');
-                $('#peminjaman').DataTable({
-                    serverSide: true,
-                    lengthChange: false,
-                    fixedColumns: true,
-                    autoWidth: true,
-                    fixedHeader: {
-                        "header": false,
-                        "footer": false
-                    },
-                    searching: false,
-                    ordering: false,
-                    info: false,
-                    paging: false,
-                    responsive: true,
-                    ajax: {
-                        url: '{!! route($route.".datatableSingle") !!}',
-                        data: {
-                            call_number: call_number
-                        }
-                    },
-                    columns: [
-                        {
-                            data: 'id',
-                            name: 'id',
-                            width: '5%',
-                            visible: false,
-                            className: 'center'
-                        },
-                        {data: 'no'},
-                        {data: 'book_series'},
-                        {data: 'title'},
-                        {data: 'date_loan'},
-                        {data: 'deadline'},
 
-                    ],
-                    order: [[0, "asc"]],
-                    columnDefs: [
-                        {targets: 0, sortable: false, orderable: false},
-                        {targets: 1, sortable: false, orderable: false, width: '5%', className: 'text-center'},
-                        {targets: 2, sortable: true, orderable: true},
-                        {targets: 3, sortable: true, orderable: true},
-                        {targets: 4, sortable: true, orderable: true},
-                        {targets: 5, sortable: true, orderable: true}
-                    ],
+                        $('#peminjaman').show('slow');
+
+                        addRow(data.code, data.title, data.date_loan, data.deadline);
+                    }
                 });
             });
         });
+        function addRow(code, title, date_loan, deadline) {
+            var append = "<tr class='tr-book' style='display: none'>" +
+                "<td>" +
+                "<span readonly type=\"text\" style='width: 100%' >" + code + "</span>" +
+                "</td>" +
+                "<td>" +
+                "<span readonly type=\"text\" style='width: 100%' >" + title + "</span>" +
+                "</td>" +
+                "<td>" +
+                "<span readonly type=\"text\" style='width: 100%'>" + date_loan + "</span>" +
+                "</td>" +
+                "<td>" +
+                "<span readonly type=\"text\" style='width: 100%'>" + deadline + "</span>" +
+                "</td>" +
+                "<td>" +
+                "<a><center><i style=\"color: indianred\" onclick=\"deleteRow(this)\" class=\"far fa-times-circle\"></i></center></a>" +
+                "</td>" +
+                "</tr>";
+            $("#table-body").append(append);
+            $(".tr-book").show('slow');
+
+            count++;
+        }
+        function deleteRow(elem) {
+            var row = $(elem).closest("tr");
+            var table = $('#peminjaman');
+            if (count !== 1) {
+                count--;
+                row.remove();
+            } else {
+                row.remove();
+                table.hide('slow');
+            }
+        }
     </script>
 @endpush

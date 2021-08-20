@@ -78,8 +78,7 @@ class BookController extends Controller
                     'title' => $row->title,
                     'author' => $row->author,
                     'edition' => $row->edition,
-                    'code' => $row->PatternCode->code,
-                    'total_item' => $row->total_item,
+                    'code' => $row->code,
                     'publisher' => $row->publisher,
                     'book_series' => $row->book_series,
                     'publishing_year' => $row->publishing_year,
@@ -186,28 +185,28 @@ class BookController extends Controller
                 $path = 'public/pdf';
                 $FilePath = Storage::disk()->put($path, $request->file('file'));
             }
-            Book::query()->create([
-                'title' => $request->title,
-                'author' => $request->author,
-                'edition' => $request->edition,
-                'code_pattern_id' => $request->code,
-                'total_item' => $request->total_item,
-                'collection' => $request->collection,
-                'location' => $request->location,
-                'GMD' => $request->GMD,
-                'media_type' => $request->media_type,
-                'book_series' => $request->book_series,
-                'publisher' => $request->publisher,
-                'publishing_year' => $request->publishing_year,
-                'publishing_place' => $request->publishing_place,
-                'classification' => $request->classification,
-                'call_number' => $request->call_number,
-                'language' => $request->language,
-                'notes' => $request->notes,
-                'image' => $ImagePath,
-                'file' => $FilePath,
-            ]);
-
+            for ($i = 1; $i < $request->total_item; $i++) {
+                Book::query()->create([
+                    'title' => $request->title,
+                    'author' => $request->author,
+                    'edition' => $request->edition,
+                    'code' => $request->code.$i,
+                    'collection' => $request->collection,
+                    'location' => $request->location,
+                    'GMD' => $request->GMD,
+                    'media_type' => $request->media_type,
+                    'book_series' => $request->book_series,
+                    'publisher' => $request->publisher,
+                    'publishing_year' => $request->publishing_year,
+                    'publishing_place' => $request->publishing_place,
+                    'classification' => $request->classification,
+                    'call_number' => $request->call_number,
+                    'language' => $request->language,
+                    'notes' => $request->notes,
+                    'image' => $ImagePath,
+                    'file' => $FilePath,
+                ]);
+            }
 
             DB::commit();
 

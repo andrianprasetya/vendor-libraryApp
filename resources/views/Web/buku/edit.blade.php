@@ -65,26 +65,10 @@
                         </div>
                         <div class="col-sm-9">
                             <div class="form-group row">
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <input type="button" class="btn btn-primary" data-toggle="modal"
-                                                   data-target="#modal-generator" value="Add New Pattern">
-                                            <span class="input-group-text"><i class="fas fa-tools"></i></span>
-                                        </div>
-                                    </div>
+                                <div class="col-md-2">
+                                    <input class="form-control " value="{{$data->code}}" readonly>
                                 </div>
                                 <div class="col-md-2">
-                                    <select class="form-control select2bs4 select-code" name="code" required>
-                                    </select>
-                                </div>
-                                <div class="col-md-1">
-                                    <label>Total items(s):</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="number" class="form-control" name="total_item" value="{{$data->total_item}}" required>
-                                </div>
-                                <div class="col-md-1">
                                     <label>Collection Type:</label>
                                 </div>
                                 <div class="col-md-2">
@@ -94,16 +78,14 @@
                                         <option value="fiction" {{$data->collection == "fiction" ? 'selected':''}}>Fiction</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row">
-                            <div class="col-md-1">
-                                <label>Location:</label>
-                            </div>
-                            <div class="col-md-2">
-                                <select class="form-control" name="location"required>
-                                    <option>My Library</option>
-                                </select>
-                            </div>
+                                <div class="col-md-1">
+                                    <label>Location:</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-control" name="location"required>
+                                        <option>My Library</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -127,17 +109,6 @@
                         </div>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" name="media_type" value="{{$data->media_type}}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>ISBN/ISSN</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="book_series" value="{{$data->book_series}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -171,17 +142,6 @@
                         </div>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" name="publishing_place" value="{{$data->publishing_place}}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>series title</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="series_title" value="{{$data->series_title}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -325,35 +285,6 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-    {{--<div class="modal fade" id="modal-xl">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Tambah Author</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <div class="col-sm-1">
-                            <label>Nama</label>
-                        </div>
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" name="name">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>--}}
-    <!-- /.modal -->
     </section>
 
 @endsection

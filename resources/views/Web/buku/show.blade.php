@@ -38,25 +38,9 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            {{-- <div class="form-group">
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
-                                     Add Author
-                                 </button>
-                             </div>--}}
                             <div class="form-group">
                                 <input type="text" class="form-control" value="{{$data->author}}" readonly>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Statement Of Responsibility</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" value="{{$data->SOR}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -72,18 +56,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>specific detail info</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-9">
-                    <textarea type="text" class="form-control"
-                              readonly>{{$data->SDI}}</textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
                             <label>Item Code Batch generator:</label>
                         </div>
                         <div class="col-sm-1">
@@ -92,13 +64,10 @@
                         <div class="col-sm-9">
                             <div class="form-group row">
                                 <div class="col-md-2">
-                                    <input class="form-control " value="{{$data->PatternCode->code}}" readonly>
+                                    <input class="form-control " value="{{$data->code}}" readonly>
                                 </div>
                                 <div class="col-md-1">
                                     <label>Total items(s):</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="number" class="form-control" value="{{$data->total_item}}" readonly>
                                 </div>
                                 <div class="col-md-1">
                                     <label>Collection Type:</label>
@@ -128,17 +97,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>Content Type</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" value="{{$data->content_type}}" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
                             <label>Media Type</label>
                         </div>
                         <div class="col-sm-1">
@@ -146,28 +104,6 @@
                         </div>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" value="{{$data->media_type}}" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Carrier Type</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" value="{{$data->carrier_type}}"  readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Frequency</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" value="{{$data->frequency}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -216,28 +152,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>collation</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" value="{{$data->collation}}" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>series title</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" value="{{$data->series_title}}" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
                             <label>Classification</label>
                         </div>
                         <div class="col-sm-1">
@@ -256,23 +170,6 @@
                         </div>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" value="{{$data->call_number}}" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>Subject</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-9">
-                            {{-- <div class="form-group row">
-                                 <input type="button" class="btn btn-primary" value="Add Subject(s)">
-                             </div>--}}
-                            <div class="form-group row">
-                                <input type="text" class="form-control" value="{{$data->subject}}" readonly>
-                            </div>
-
                         </div>
                     </div>
                     <div class="form-group row">
@@ -300,7 +197,7 @@
                     <div class="form-group row">
                         <div class="col-sm-4">
                             <img id="preview-image"
-                                 src="{{ asset(Storage::url($data->image)) }}"
+                                 src="{{ asset(\Illuminate\Support\Facades\Storage::url($data->image)) }}"
                                  style="border-radius: 10%;background-position: center center;background-repeat: no-repeat;cursor: pointer;"
                                  @if($isEdit)
                                  data-src="holder.js/2=200x200?text=Klik untuk meng-upload gambar"
@@ -326,104 +223,10 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="form-group row">
-                         <div class="col-sm-2">
-                             <label>Data Biblio Terkait:</label>
-                         </div>
-                         <div class="col-sm-1">
-                             <label>:</label>
-                         </div>
-                         <div class="col-sm-9">
-                             <input type="button" class="btn btn-primary" value="Add Relation">
-                         </div>
-                     </div>--}}
+
             </div>
             <!-- /.card-body -->
         </div>
-
-        <div class="modal fade" id="modal-generator">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <form action="{{route('web::book.pattern_book')}}" method="post">
-                        @csrf
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group row">
-                                <div class="col-sm-3">
-                                    <label>Prefix</label>
-                                </div>
-                                <div class="col-sm-1">
-                                    <label>:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="prefix" id="prefix">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-3">
-                                    <label>Length Serial number</label>
-                                </div>
-                                <div class="col-sm-1">
-                                    <label>:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="length" id="length">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-1">
-                                    <label>Preview</label>
-                                </div>
-                                <div class="col-sm-1">
-                                    <label>:</label>
-                                </div>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="code" id="code" readonly>
-                                </div>
-                            </div>
-                            <div class="float-sm-left">
-                                <input type="submit" class="btn btn-primary" value="Save">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-    {{--<div class="modal fade" id="modal-xl">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Tambah Author</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <div class="col-sm-1">
-                            <label>Nama</label>
-                        </div>
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" name="name">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>--}}
-    <!-- /.modal -->
     </section>
 
 @endsection

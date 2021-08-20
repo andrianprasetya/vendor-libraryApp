@@ -37,8 +37,7 @@ class Book extends Model
         'title',
         'author',
         'edition',
-        'code_pattern_id',
-        'total_item',
+        'code',
         'collection',
         'location',
         'GMD',
@@ -54,8 +53,4 @@ class Book extends Model
         'image',
         'file',];
 
-    public function PatternCode()
-    {
-        return $this->belongsTo(PatternBook::class, 'code_pattern_id', 'id');
-    }
 }

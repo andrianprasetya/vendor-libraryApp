@@ -68,10 +68,10 @@ class LoanController extends Controller
     public function getDataBook(Request $request)
     {
         try {
-            $book = Book::query()->where('call_number', $request->call_number)->first();
+            $book = Book::query()->where('code', $request->code)->first();
             $items = array(
                 "id" => $book->id,
-                "book_series" => $book->book_series,
+                "code" => $book->code,
                 "title" => $book->title,
                 "date_loan" => Carbon::now('Asia/Jakarta')->format('Y-m-d'),
                 "deadline" => Carbon::now('Asia/Jakarta')->addDay(7)->format('Y-m-d'),
@@ -97,7 +97,7 @@ class LoanController extends Controller
 
             $countAll = Book::query()->count();
             $paginate = Book::query()->select('*')
-                ->where('call_number', $request->call_number)
+                ->where('code', $request->code)
                 ->whereRaw($conditions)
                 ->paginate($limit, ["*"], 'page', $page);
             $items = array();
@@ -106,7 +106,7 @@ class LoanController extends Controller
                 $items[] = array(
                     "no" => 1 + $idx . ".",
                     "id" => $row->id,
-                    "book_series" => $row->book_series,
+                    "code" => $row->code,
                     "title" => $row->title,
                     "date_loan" => Carbon::now('Asia/Jakarta')->format('Y-m-d'),
                     "deadline" => Carbon::now('Asia/Jakarta')->addDay(7)->format('Y-m-d'),
@@ -148,10 +148,10 @@ class LoanController extends Controller
             $items = array();
 
             foreach ($paginate->items() as $idx => $row) {
-                $routeDetail = $row->is_returned == "t" ? "#":route("web::sirkulasi.peminjaman.show", $row['id']);
+                $routeAction = $row->is_returned == "t" ? "#":route("web::sirkulasi.peminjaman.show", $row['id']);
                 $action = null;
                 $action .= '<div class="row text-center"><div class="col-md-6">';
-                $action .= '<a href="' . $routeDetail . '" style="margin:10px" class="text-light-blue disabled" data-toggle="tooltip" data-placement="bottom" title="Detail"><i class="fas fa-arrow-circle-right"></i></a>';
+                $action .= '<a href="' . $routeAction . '" style="margin:10px" class="text-light-blue disabled" data-toggle="tooltip" data-placement="bottom" title="Return"><i class="fas fa-arrow-circle-right"></i></a>';
                 $action .= '</div></div>';
                 $items[] = array(
                     "no" => 1 + $idx . ".",

@@ -121,8 +121,17 @@
                         <input type="text" class="form-control" name="institution" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputFile">Foto</label>
-                        <input type="file" name="image">
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <input type="file" class="invisible" name="image" id="image"
+                                       value="{{ old('image') }}"
+                                       placeholder="{!! trans('label.image') !!}" accept="image/*">
+                                <img id="preview-image"
+                                     style="border-radius: 20%; background-position: center center;background-repeat: no-repeat;cursor: pointer;"
+                                     data-src="holder.js/200x200?text=upload gambar"
+                                     class="img-responsive ">
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Email:</label>
@@ -145,6 +154,55 @@
 @push('script')
     <script>
         $(function () {
+
+            var previewApk = document.getElementById('preview-image');
+            Holder.run({
+                images: [previewApk]
+            });
+
+            function previewAttachment(input, image) {
+                if (input.files && input.files[0]) {
+                    var imageInfo = [];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $(image).attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    var sizeInKB = Math.floor(input.files[0].size / 1024);
+                    var size = sizeInKB + ' KB';
+                    if (sizeInKB >= 1024) {
+                        var sizeInMB = Math.floor(sizeInKB / 1024);
+                        size = sizeInMB + ' MB';
+                    }
+                    imageInfo['name'] = input.files[0].name;
+                    imageInfo['size'] = size;
+                    return imageInfo;
+                }
+            }
+
+            var CALL = {
+                previewImage: function (input, image) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $(image).attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                },
+            };
+            $(document).on('change', '#image', function () {
+                CALL.previewImage(this, '#preview-image');
+            });
+            $(document).on('click', '#preview-image', function () {
+                $('#image').click();
+            });
+            $(document).on('change', '.input-file', function () {
+                $('#preview-upload-wrapper').slideDown();
+                var imageInfo = previewAttachment(this, '.preview-upload');
+                $('.mailbox-attachment-name').html('<i class="fa fa-camera"></i> ' + trimLength(imageInfo['name'], 15));
+                $('.mailbox-attachment-size').text(imageInfo['size']);
+            });
             //Date picker
             $('#reservationdate').datetimepicker({
                 format: 'L'
