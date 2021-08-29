@@ -4,10 +4,11 @@ namespace App\Models;
 
 use App\Traits\UuidModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
-    use UuidModel;
+    use UuidModel, SoftDeletes;
 
     public $table = 'books';
 
@@ -37,10 +38,8 @@ class Book extends Model
         'title',
         'author',
         'edition',
-        'code',
-        'collection',
-        'location',
-        'GMD',
+        'total_item',
+        'gmd',
         'media_type',
         'book_series',
         'publisher',
@@ -48,9 +47,20 @@ class Book extends Model
         'publishing_place',
         'classification',
         'call_number',
+        'collection',
         'language',
         'notes',
         'image',
-        'file',];
+        'file',
+        'slug_file',
+        'sequence'];
 
+    public function codes()
+    {
+        return $this->belongsToMany(PatternBook::class, 'code_books', 'book_id', 'pattern_book_id');
+    }
+
+    public function code_book(){
+        return $this->hasMany(CodeBook::class, 'book_id','id');
+    }
 }

@@ -46,10 +46,13 @@
 @push('script')
     <script>
         $(function () {
-            /*$("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');*/
+
+            $.getScript("https://www.jqueryscript.net/demo/Delete-Confirmation-Dialog-Plugin-with-jQuery-Bootstrap/bootstrap-confirm-delete.js", function(){
+                $('.delete').bootstrap_confirm_delete({
+                    heading: 'Delete',
+                    message: 'Are you sure you want to delete this record?'
+                });
+            });
             $('#example1').DataTable({
                 processing: true,
                 scrollX: true,

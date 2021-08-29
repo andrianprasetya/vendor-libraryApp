@@ -12,8 +12,11 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Ramsey\Uuid\Uuid;
 
 class MemberController extends Controller
@@ -38,7 +41,8 @@ class MemberController extends Controller
     {
         $br = '<li class="active breadcrumb-item">' . ' list ' . $this->menu . '</li>';
         $breadcrumb = $this->breadcrumbs($br);
-        return view($this->view . '.index', compact('breadcrumb'));
+        $data = null;
+        return view($this->view . '.index', compact('breadcrumb','data'));
     }
 
     public function getDatatable(Request $request)
@@ -73,11 +77,17 @@ class MemberController extends Controller
             foreach ($paginate->items() as $idx => $row) {
                 $routeDetail = route("web::member.show", $row['id']);
                 $routeEdit = route("web::member.edit", $row['id']);
+                $routeCard = route("web::member.print-card", $row['id']);
+                $routeDelete = route("web::member.destroy", $row['id']);
                 $action = null;
-                $action .= '<div class="row text-center"><div class="col-md-6">';
+                $action .= '<div class="row text-center"><div class="col-md-3">';
                 $action .= '<a href="' . $routeDetail . '" style="margin:10px" class="text-light-blue" data-toggle="tooltip" data-placement="bottom" title="Detail"><i class="fa fa-eye"></i></a>';
-                $action .= '</div><div class="col-md-6">';
+                $action .= '</div><div class="col-md-3">';
                 $action .= '<a href="' . $routeEdit . '" style="margin:10px" class="text-yellow"  data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></a>';
+                $action .= '</div><div class="col-md-3">';
+                $action .= '<a href="' . $routeCard . '" style="margin:10px" class="text-green"  data-toggle="tooltip" data-placement="bottom" title="Print" target="_blank"><i class="fa fa-print"></i></a>';
+                $action .= '</div><div class="col-md-3">';
+                $action .= '<a href="' . $routeDelete . '" style="margin:10px" class="text-green delete"  data-toggle="tooltip" data-singleton="true" data-popout="true" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></a>';
                 $action .= '</div></div>';
 
                 $items[] = array(
@@ -194,6 +204,7 @@ class MemberController extends Controller
         DB::beginTransaction();
 
         try {
+
             $storagePath = "";
             if ($request->hasFile('image')) {
                 foreach ($request->file() as $files) {
@@ -205,6 +216,7 @@ class MemberController extends Controller
                     'nis' => $request->nis,
                     'name' => $request->name,
                     'address' => $request->address,
+                    'kelas' => $request->kelas,
                     'province_id' => $request->province,
                     'regency_id' => $request->regency,
                     'district_id' => $request->district,
@@ -252,6 +264,41 @@ class MemberController extends Controller
             $breadcrumb = $this->breadcrumbs($this->breadcrumb . '<li class="breadcrumb-item active">' . 'Detail Member' . '</li>');
             $data = User::findOrFail($id);
             return view($this->view . '.show', compact('breadcrumb', 'data','isEdit'));
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error($e->getMessage());
+            abort(404);
+        }
+    }
+
+    public function printCard($id)
+    {
+        try {
+            $data = User::query()->findOrFail($id);
+            $pdf = PDF::loadView($this->view . '.pdf.card', compact('data', 'initial'))
+                ->setOption('page-width', '320.0')
+                ->setOption('page-height', '180.0')
+                ->save(storage_path('app/public/pdf/card/kartu_perpustakaan_' . $data->id . '.pdf'), true);
+
+            return $pdf->download(asset('storage/pdf/card/kartu_perpustakaan_'.$data->id.'.pdf'));
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error($e->getMessage());
+            abort(404);
+        }
+    }
+
+    public function changePassword(Request $request ,$id)
+    {  DB::beginTransaction();
+        try {
+            if ($request->password != $request->konfirmasi_password){
+                return redirect(URL::previous())->with('status', 'Password Tidak Sesuai / Tida sama');
+            }
+
+            $student = User::query()->findOrFail($id);
+            $student->update(['password' => Hash::make($request->password)]);
+            DB::commit();
+            return redirect()->route('web::dashboard.index');
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
@@ -333,6 +380,7 @@ class MemberController extends Controller
                     'nis' => $request->nis,
                     'name' => $request->name,
                     'address' => $request->address,
+                    'kelas' => $request->kelas,
                     'province_id' => $request->province,
                     'regency_id' => $request->regency,
                     'district_id' => $request->district,
@@ -366,6 +414,8 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = User::query()->findOrFail($id);
+        $item->delete();
+        return redirect(URL::previous())->with('status','Delete Successfully');
     }
 }

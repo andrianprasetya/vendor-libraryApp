@@ -19,7 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('nis')->nullable();
+            $table->string('nis')->unique();
+            $table->string('kelas')->nullable();
             $table->date('birthday')->nullable();
             $table->string('gender')->nullable();
             $table->string('address')->nullable();
@@ -28,11 +29,12 @@ class CreateUsersTable extends Migration
             $table->string('province_id')->nullable();
             $table->string('code_pos')->nullable();
             $table->string('institution')->nullable();
-            $table->string('no_telp')->nullable();
+            $table->string('no_telp')->nullable()->unique();
             $table->string('image')->nullable();
 
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('province_id')->on('provinces')->references('id');
             $table->foreign('regency_id')->on('regencies')->references('id');

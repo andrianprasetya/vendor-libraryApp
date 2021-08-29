@@ -29,6 +29,10 @@
                         <label>Nama:</label>
                         <input type="text" class="form-control" name="name" value="{{$data->name}}" required>
                     </div>
+                    <div class="form-group">
+                        <label>Kelas:</label>
+                        <input type="text" class="form-control" name="kelas" value="{{$data->kelas}}" required>
+                    </div>
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
@@ -97,7 +101,7 @@
                         <div style="margin-left: 20px;">
                             <div class="row">
                                 <div class="icheck-primary d-inline">
-                                    <input type="radio" id="radioPrimary1" name="gender" value="L" checked>
+                                    <input type="radio" id="radioPrimary1" name="gender" value="L" {{$data->gender == "L" ? 'checked' : ''}}>
                                     <label for="radioPrimary1">
                                         Laki Laki
                                     </label>
@@ -105,7 +109,7 @@
                             </div>
                             <div class="row">
                                 <div class="icheck-primary d-inline">
-                                    <input type="radio" id="radioPrimary2" name="gender" value="P">
+                                    <input type="radio" id="radioPrimary2" name="gender" value="P" {{$data->gender == "P" ? 'checked' : ''}}>
                                     <label for="radioPrimary2">
                                         Perempuan
                                     </label>

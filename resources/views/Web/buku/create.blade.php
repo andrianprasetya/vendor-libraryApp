@@ -1,5 +1,28 @@
 @extends('layouts.template')
 
+<style>
+    .border-wrapper {
+        border-width: thin;
+        border-style: dashed;
+        border-radius: 25px;
+        margin-bottom: 10px;
+    }
+
+    .icon-wrapper {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .icon-wrapper {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+</style>
+
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
@@ -116,7 +139,12 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="GMD" required>
+                            <select class="form-control select2bs4 select-language" name="gmd" required>
+                                <option value="text">Text</option>
+                                <option value="art original">Art Original</option>
+                                <option value="chart">Chart</option>
+                                <option value="computer software">Computer Software</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -222,7 +250,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <input type="file" class="invisible" name="image" id="image"
                                    value="{{ old('image') }}"
                                    placeholder="{!! trans('label.image') !!}" accept="image/*">
@@ -232,19 +260,14 @@
                                  class="img-responsive ">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>File Attachement</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
-                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    <div class="form-group">
+                        <label class="col-form-label">File</label>
+                        <div class="border-wrapper document-wrapper">
+                            <div class="icon-wrapper">
+                                <center><i class="fa fa-5x fa-plus-circle"></i></center>
                             </div>
                         </div>
+                        <input type="file" name="file" class="hidden input-document" accept="application/*">
                     </div>
                     <div class="float-sm-right">
                         <input type="submit" class="btn btn-primary" value="Save">
@@ -313,6 +336,18 @@
 @endsection
 @push('script')
     <script>
+
+        $(document).on('click', '.document-wrapper', function () {
+            $(this).parent().find('.input-document').click();
+        });
+
+        $(document).on('change', '.input-document', function (e) {
+            let fileName = e.target.files[0].name;
+            $(this).parent().find('.icon-wrapper').html(
+                '<center><p>' + fileName + '</p></center>'
+            );
+        });
+
         $(function () {
             var previewApk = document.getElementById('preview-image');
             Holder.run({
@@ -397,7 +432,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.text,
-                                    id: item.text
+                                    id: item.id
                                 }
                             })
                         };

@@ -25,6 +25,7 @@
                         <th class="d-block d-sm-none">Id</th>
                         <th>No</th>
                         <th>Judul</th>
+                        <th>Code</th>
                         <th>Nama</th>
                         <th>Waktu Peminjaman</th>
                         <th>Waktu Kembali</th>
@@ -66,6 +67,7 @@
                     },
                     {data: 'no'},
                     {data: 'title'},
+                    {data: 'code'},
                     {data: 'name'},
                     {data: 'date_loan'},
                     {data: 'deadline'},
@@ -95,8 +97,9 @@
                     {targets: 4, sortable: true, orderable: true},
                     {targets: 5, sortable: true, orderable: true},
                     {targets: 6, sortable: true, orderable: true},
-                    {targets: 7, sortable: true, orderable: true ,  className: 'text-center'},
-                    {targets: 8, sortable: false, orderable: false, width: '5%', className: 'text-center'}
+                    {targets: 7, sortable: true, orderable: true},
+                    {targets: 8, sortable: true, orderable: true ,  className: 'text-center'},
+                    {targets: 9, sortable: false, orderable: false, width: '10%', className: 'text-center'}
                 ],
             });
         })

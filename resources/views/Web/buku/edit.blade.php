@@ -1,5 +1,28 @@
 @extends('layouts.template')
 
+    <style>
+        .border-wrapper {
+            border-width: thin;
+            border-style: dashed;
+            border-radius: 25px;
+            margin-bottom: 10px;
+        }
+
+        .icon-wrapper {
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .icon-wrapper {
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+    </style>
+
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
@@ -41,7 +64,8 @@
                         </div>
                         <div class="col-sm-9">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="author" value="{{$data->author}}" required>
+                                <input type="text" class="form-control" name="author" value="{{$data->author}}"
+                                       required>
                             </div>
                         </div>
                     </div>
@@ -58,35 +82,39 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            <label>Item Code Batch generator:</label>
+                            <label>Code :</label>
                         </div>
                         <div class="col-sm-1">
                             <label>:</label>
                         </div>
                         <div class="col-sm-9">
-                            <div class="form-group row">
-                                <div class="col-md-2">
-                                    <input class="form-control " value="{{$data->code}}" readonly>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Collection Type:</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <select class="form-control select2bs4" name="collection" required>
-                                        <option value="reference" {{$data->collection == "reference" ? 'selected':''}}>Reference</option>
-                                        <option value="textbook" {{$data->collection == "textbook" ? 'selected':''}}>Textbook</option>
-                                        <option value="fiction" {{$data->collection == "fiction" ? 'selected':''}}>Fiction</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-1">
-                                    <label>Location:</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <select class="form-control" name="location"required>
-                                        <option>My Library</option>
-                                    </select>
-                                </div>
+                            <div class="form-group">
+                                <table id="table-code" class="table table-bordered table-striped display nowrap"
+                                       style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th class="d-block d-sm-none">Id</th>
+                                        <th class="text-center">Action</th>
+                                        <th>Code</th>
+                                        <th>Collection</th>
+                                        <th>Location</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <label>Total Item</label>
+                        </div>
+                        <div class="col-sm-1">
+                            <label>:</label>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="number" class="form-control" name="total_item" value="{{$data->total_item}}"
+                                   required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -97,7 +125,12 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="GMD" value="{{$data->GMD}}" required>
+                            <select class="form-control select2bs4 select-language" name="gmd" required>
+                                <option value="text" {{$data->gmd == "text" ? 'selected':''}}>Text</option>
+                                <option value="art original" {{$data->gmd == "art original" ? 'selected':''}}>Art Original</option>
+                                <option value="chart" {{$data->gmd == "chart" ? 'selected':''}}>Chart</option>
+                                <option value="computer software" {{$data->gmd == "computer software" ? 'selected':''}}>Computer Software</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -108,7 +141,20 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="media_type" value="{{$data->media_type}}" required>
+                            <input type="text" class="form-control" name="media_type" value="{{$data->media_type}}"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <label>ISBN/ISSN</label>
+                        </div>
+                        <div class="col-sm-1">
+                            <label>:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="book_series" value="{{$data->book_series}}"
+                                   required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -119,7 +165,8 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="publisher" value="{{$data->publisher}}" required>
+                            <input type="text" class="form-control" name="publisher" value="{{$data->publisher}}"
+                                   required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -130,7 +177,8 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="publishing_year" value="{{$data->publishing_year}}" required>
+                            <input type="text" class="form-control" name="publishing_year"
+                                   value="{{$data->publishing_year}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -141,7 +189,8 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="publishing_place" value="{{$data->publishing_place}}" required>
+                            <input type="text" class="form-control" name="publishing_place"
+                                   value="{{$data->publishing_place}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -152,7 +201,8 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="classification" value="{{$data->classification}}"required>
+                            <input type="text" class="form-control" name="classification"
+                                   value="{{$data->classification}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -163,7 +213,8 @@
                             <label>:</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="call_number" value="{{$data->call_number}}" required>
+                            <input type="text" class="form-control" name="call_number" value="{{$data->call_number}}"
+                                   required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -175,8 +226,11 @@
                         </div>
                         <div class="col-sm-5">
                             <select class="form-control select2bs4 select-language" name="language" required>
-                                <option value="indonesia" {{$data->language == "indonesia" ? 'selected' : ''}}>Indonesia</option>
-                                <option value="english" {{$data->language == "indonesia" ? 'english' : ''}}>English</option>
+                                <option value="indonesia" {{$data->language == "indonesia" ? 'selected' : ''}}>
+                                    Indonesia
+                                </option>
+                                <option value="english" {{$data->language == "indonesia" ? 'english' : ''}}>English
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -193,8 +247,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-4">
-                            <input type="file" class="invisible" name="image" id="image"
-                                   value="{{ old('image') }}"
+                            <input type="file" class="invisible" name="image" id="image" value="{{$data->image}}"
                                    placeholder="{!! trans('label.image') !!}" accept="image/*">
                             <img id="preview-image"
                                  src="{{ asset(Storage::url($data->image)) }}"
@@ -209,19 +262,20 @@
                                  class="img-responsives">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label>File Attachement</label>
-                        </div>
-                        <div class="col-sm-1">
-                            <label>:</label>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
-                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    <div class="form-group">
+                        <label class="col-form-label">File</label>
+                        <div class="border-wrapper document-wrapper">
+                            <div class="icon-wrapper">
+                                @if ($data->file)
+                                    <center><a href="{{ asset(\Illuminate\Support\Facades\Storage::url($data->file)) }}"
+                                               class="document-url" target="_blank">{{ $data->slug_file }}</a></center>
+                                @else
+                                    <center><i class="fa fa-5x fa-plus-circle"></i></center>
+                                @endif
+                                <center><i class="fa fa-5x fa-plus-circle"></i></center>
                             </div>
                         </div>
+                        <input type="file" name="file" class="hidden input-document" accept="application/*">
                     </div>
                     <div class="float-sm-right">
                         <input type="submit" class="btn btn-primary" value="Save">
@@ -290,7 +344,18 @@
 @endsection
 @push('script')
     <script>
+        $(document).on('click', '.document-wrapper', function () {
+            $(this).parent().find('.input-document').click();
+        });
+
+        $(document).on('change', '.input-document', function (e) {
+            let fileName = e.target.files[0].name;
+            $(this).parent().find('.icon-wrapper').html(
+                '<center><p>' + fileName + '</p></center>'
+            );
+        });
         $(function () {
+
             var previewApk = document.getElementById('preview-image');
             Holder.run({
                 images: [previewApk]
@@ -384,6 +449,51 @@
             $('.select-language').select2({
                 allowClear: true,
                 theme: 'bootstrap4',
+            });
+            $('#table-code').DataTable({
+                processing: true,
+                scrollY: "100px",
+                scrollCollapse: true,
+                serverSide: true,
+                lengthChange: false,
+                fixedColumns: true,
+                autoWidth: true,
+                fixedHeader: {
+                    "header": false,
+                    "footer": false
+                },
+                searching: false,
+                ordering: false,
+                paging: false,
+                info: false,
+                responsive: true,
+                ajax: {
+                    url:'{!! route($route.".datatableCodes") !!}',
+                    data: function (data){
+                        data.book_id = '{!! $data->id !!}';
+                        return data;
+                    }
+                },
+                columns: [
+                    {
+                        data: 'id',
+                        name: 'id',
+                        width: '5%',
+                        visible: false,
+                        className: 'center'
+                    },
+                    {data: 'code'},
+                    {data: 'collection'},
+                    {data: 'location'}
+
+                ],
+                order: [[0, "asc"]],
+                columnDefs: [
+                    {targets: 0, sortable: false, orderable: false},
+                    {targets: 1, sortable: true, orderable: true},
+                    {targets: 2, sortable: false, orderable: false},
+                    {targets: 3, sortable: false, orderable: false},
+                ],
             });
         });
     </script>

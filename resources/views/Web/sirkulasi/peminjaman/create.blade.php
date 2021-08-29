@@ -74,7 +74,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Kode Buku : </label>
-                                <input type="text" class="form-control" id="code">
+                                <input type="text" class="form-control" id="code_book">
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-2">
@@ -83,11 +83,6 @@
                             </div>
                         </div>
                     </div>
-                    <input type="text" class="form-control" id="book_id" name="book_id" style="display: none">
-                    <input type="text" class="form-control" id="code" name="code" style="display: none">
-                    <input type="text" class="form-control" id="title" name="title" style="display: none">
-                    <input type="text" class="form-control" id="date_loan" name="date_loan" style="display: none">
-                    <input type="text" class="form-control" id="deadline" name="deadline" style="display: none">
                     <div class="form-group">
                         <div class="float-sm-left">
                             <input type="submit" class="btn btn-default" value="Finish Transaction">
@@ -103,6 +98,7 @@
 @push('script')
     <script>
 
+        var idBook = [];
         var count = 0;
         $(function () {
             var NIS = "";
@@ -124,53 +120,76 @@
             });
 
             $('#find_book').on('click', function () {
-                var code = $('#code').val();
+                var code_book = $('#code_book').val();
                 $.ajax({
                     url: '{!! route($route.".getDataBook") !!}',
                     dataType: 'json',
                     data: {
-                        code: code,
+                        code: code_book,
                     },
                     success: function (data) {
-                        $('#book_id').val(data.id);
-                        $('#code').val(data.code);
-                        $('#title').val(data.title);
-                        $('#date_loan').val(data.date_loan);
-                        $('#deadline').val(data.deadline);
+                        if (data.message == "success") {
+                            $('#book_id').val(data.id);
+                            $('#code').val(data.code);
+                            $('#title').val(data.title);
+                            $('#date_loan').val(data.date_loan);
+                            $('#deadline').val(data.deadline);
 
-                        $('#peminjaman').show('slow');
+                            $('#peminjaman').show('slow');
 
-                        addRow(data.code, data.title, data.date_loan, data.deadline);
+                            addRow(data.id, data.code, data.title, data.date_loan, data.deadline);
+                        } else {
+                        alert("Buku sedang di pinjam");
                     }
-                });
+                },
+                error: function (data){
+                    alert("Buku Tidak ada");
+                }
             });
         });
-        function addRow(code, title, date_loan, deadline) {
-            var append = "<tr class='tr-book' style='display: none'>" +
-                "<td>" +
-                "<span readonly type=\"text\" style='width: 100%' >" + code + "</span>" +
-                "</td>" +
-                "<td>" +
-                "<span readonly type=\"text\" style='width: 100%' >" + title + "</span>" +
-                "</td>" +
-                "<td>" +
-                "<span readonly type=\"text\" style='width: 100%'>" + date_loan + "</span>" +
-                "</td>" +
-                "<td>" +
-                "<span readonly type=\"text\" style='width: 100%'>" + deadline + "</span>" +
-                "</td>" +
-                "<td>" +
-                "<a><center><i style=\"color: indianred\" onclick=\"deleteRow(this)\" class=\"far fa-times-circle\"></i></center></a>" +
-                "</td>" +
-                "</tr>";
-            $("#table-body").append(append);
-            $(".tr-book").show('slow');
+        })
+        ;
 
-            count++;
+        function addRow(book_id, code, title, date_loan, deadline) {
+
+            if (idBook.includes(code) == true) {
+                alert("Has added")
+            } else {
+                idBook[count] = code;
+                var append = "<tr class='tr-book' style='display: none'>" +
+                    "<td>" +
+                    "<input class='form-control hidden_id' type=\"hidden\" style='width: 100%' value='" + book_id + "' name=\"books[" + count + "][id]\">" +
+                    "<span readonly type=\"text\" style='width: 100%' >" + code + "</span>" +
+                    "<input class='form-control hidden_code' type=\"hidden\" style='width: 100%' value='" + code + "' name=\"books[" + count + "][code]\">" +
+                    "</td>" +
+                    "<td>" +
+                    "<span readonly type=\"text\" style='width: 100%' >" + title + "</span>" +
+                    "<input class='form-control hidden_title' type=\"hidden\" style='width: 100%' value='" + title + "' name=\"books[" + count + "][title]\">" +
+                    "</td>" +
+                    "<td>" +
+                    "<span readonly type=\"text\" style='width: 100%'>" + date_loan + "</span>" +
+                    "<input class='form-control hidden_date_loan' type=\"hidden\" style='width: 100%' value='" + date_loan + "' name=\"books[" + count + "][date_loan]\">" +
+                    "</td>" +
+                    "<td>" +
+                    "<span readonly type=\"text\" style='width: 100%'>" + deadline + "</span>" +
+                    "<input class='form-control hidden_deadline' type=\"hidden\" style='width: 100%' value='" + deadline + "' name=\"books[" + count + "][deadline]\">" +
+                    "</td>" +
+                    "<td>" +
+                    "<a><center><i style=\"color: indianred\" onclick=\"deleteRow(this)\" class=\"far fa-times-circle\"></i></center></a>" +
+                    "</td>" +
+                    "</tr>";
+                $("#table-body").append(append);
+                $(".tr-book").show('slow');
+                count++;
+            }
         }
+
         function deleteRow(elem) {
             var row = $(elem).closest("tr");
+            var book_id = row.find(".hidden_id").val();
             var table = $('#peminjaman');
+            var index = idBook.indexOf(book_id);
+            idBook.splice(index, 1);
             if (count !== 1) {
                 count--;
                 row.remove();
@@ -179,5 +198,6 @@
                 table.hide('slow');
             }
         }
+
     </script>
 @endpush

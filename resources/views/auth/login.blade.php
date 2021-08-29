@@ -2,14 +2,14 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-        <div class="login-box" style="margin-top: 10%;">
+        <div class="login-box" style="margin-top: 10%; width: 50%;">
             <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <b class="h1">Perpustakaan</b>
+                    <b class="h2">PERPUSTAKAAN
+                    <br>SMA ANGKASA LANUD SULAIMAN</b>
                 </div>
                 <div class="card-body">
-                    <p class="login-box-msg">Sign in to start your session</p>
 
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

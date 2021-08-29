@@ -19,6 +19,7 @@ class CreateLoansTable extends Migration
             $table->foreign('book_id')->on('books')->references('id');
             $table->uuid('siswa_id');
             $table->foreign('siswa_id')->on('users')->references('id');
+            $table->string('code')->nullable();
             $table->date('tgl_peminjaman')->nullable();
             $table->date('deadline')->nullable();
             $table->date('tgl_pengembalian')->nullable();

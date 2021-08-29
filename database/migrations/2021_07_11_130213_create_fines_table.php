@@ -13,19 +13,17 @@ class CreateFinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('denda', function (Blueprint $table) {
+        Schema::create('fines', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->uuid('siswa_id');
+            $table->uuid('siswa_id')->nullable();
             $table->foreign('siswa_id')->on('users')->references('id');
-            $table->uuid('loan_id');
+            $table->uuid('loan_id')->nullable();;
             $table->foreign('loan_id')->on('loans')->references('id');
             $table->uuid('book_id')->nullable();
             $table->foreign('book_id')->on('books')->references('id');
-            $table->integer('telat')->nullable();
-            $table->integer('total_denda')->nullable();
+            $table->integer('late')->nullable()->comment('Hari / Day');
             $table->integer('nominal')->nullable();
-            $table->boolean('is_money')->nullable();
-            $table->boolean('is_book')->nullable();
+            $table->integer('object')->nullable()->comment('0 => Money, 1 => Book');
             $table->timestamps();
         });
     }
@@ -37,6 +35,6 @@ class CreateFinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('denda');
+        Schema::dropIfExists('fines');
     }
 }

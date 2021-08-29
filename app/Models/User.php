@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Traits\UuidModel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use UuidModel, Notifiable;
+    use UuidModel, Notifiable, SoftDeletes;
 
     public $table = 'users';
 
@@ -44,6 +45,7 @@ class User extends Authenticatable
         'nis',
         'name',
         'email',
+        'kelas',
         'password',
         'address',
         'province_id',

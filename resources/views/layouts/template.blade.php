@@ -15,12 +15,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @include('partials.style')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
 <div class="wrapper">
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{url('/dashboard/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo"
+        <img class="animation__shake" src="{{url('/dashboard/dist/img/logo.jpeg')}}" alt="AdminLTELogo"
              height="60" width="60">
     </div>
 

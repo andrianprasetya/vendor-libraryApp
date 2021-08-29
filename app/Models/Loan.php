@@ -39,7 +39,8 @@ class Loan extends Model
         'tgl_peminjaman',
         'deadline',
         'tgl_pengembalian',
-        'is_returned'
+        'is_returned',
+        'code'
     ];
 
     public function student()
@@ -50,4 +51,5 @@ class Loan extends Model
     {
         return $this->belongsTo(Book::class, 'book_id','id');
     }
+
 }

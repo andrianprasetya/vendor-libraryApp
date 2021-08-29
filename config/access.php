@@ -20,11 +20,11 @@ return [
             'index' => 'index',
             'action' => ['index', 'detail', 'create', 'edit', 'delete'],
         ],
-        'web/sirkulasi/pengembalian' => [
+        'web/sirkulasi/perpanjangan' => [
             'index' => 'index',
             'action' => ['index', 'detail', 'create', 'edit', 'delete'],
         ],
-        'web/sirkulasi/perpanjangan' => [
+        'web/sirkulasi/denda' => [
             'index' => 'index',
             'action' => ['index', 'detail', 'create', 'edit', 'delete'],
         ],
@@ -35,7 +35,24 @@ return [
         'web/book' => [
             'index' => 'index',
             'action' => ['index', 'detail', 'create', 'edit', 'delete'],
+        ],
+        'web/report/gmd' => [
+            'index' => 'index',
+            'action' => ['index', 'detail'],
+        ],
+        'web/report/member' => [
+            'index' => 'index',
+            'action' => ['index', 'detail'],
+        ],
+        'web/report/collection' => [
+            'index' => 'index',
+            'action' => ['index', 'detail'],
+        ],
+        'web/report/language' => [
+            'index' => 'index',
+            'action' => ['index', 'detail'],
         ]
+
 
     ]
 ];

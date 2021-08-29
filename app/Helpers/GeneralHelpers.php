@@ -13,7 +13,6 @@ if (! function_exists('check_access')) {
         if ($menu) {
             $roleIds = \Illuminate\Support\Arr::flatten(auth()->user()->userRoles()->select('role_id')->get()->toArray());
             foreach ($menu->roleMenus()->whereIn('role_id', $roleIds)->get() as $roleMenu) {
-
                 $accesses[] = explode(config('access.delimiter'), $roleMenu->accesses);
 
             }

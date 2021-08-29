@@ -39,7 +39,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>100</h3>
+                    <h3>{{$count_late_book}}</h3>
 
                     <p>Terlambat</p>
                 </div>
@@ -180,7 +180,7 @@
                 ],
                 datasets: [
                     {
-                        data: [60, 40],
+                        data: ['{!! $book_ready !!}', '{!! $book_loan !!}'],
                         backgroundColor: ['#f56954', '#d2d6de'],
                     }
                 ]

@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             'name' => 'testPetugasLayanan',
             'email' => 'testpetugaslayanan@gmail.com',
             'password' => \Illuminate\Support\Facades\Hash::make('test1234'),
+            'nis' => '12345678'
         ]);
 
         $adminRoleModel1 = $role->create([
@@ -40,6 +41,7 @@ class UserSeeder extends Seeder
             'name' => 'testKepalaPerpustakaan',
             'email' => 'testkepalaperpustakaan@gmail.com',
             'password' => \Illuminate\Support\Facades\Hash::make('test1234'),
+            'nis' => '1'
         ]);
 
         $adminRoleModel2 = $role->create([
@@ -57,6 +59,7 @@ class UserSeeder extends Seeder
             'name' => 'testSiswa',
             'email' => 'testsiswa@gmail.com',
             'password' => \Illuminate\Support\Facades\Hash::make('test1234'),
+            'nis' => '2'
         ]);
 
         $adminRoleModel3 = $role->create([
@@ -74,11 +77,12 @@ class UserSeeder extends Seeder
             'name' => 'testPetugasTeknis',
             'email' => 'testpetugasteknis@gmail.com',
             'password' => \Illuminate\Support\Facades\Hash::make('test1234'),
+            'nis' => '3'
         ]);
 
         $adminRoleModel4 = $role->create([
             'name' => $RoleName4,
-            'slug' => \Illuminate\Support\Str::slug($RoleName1)
+            'slug' => \Illuminate\Support\Str::slug($RoleName4)
         ]);
 
         $userData4->roles()->attach($adminRoleModel4->id, [

@@ -27,7 +27,6 @@
                         <th>ISBN / ISSN</th>
                         <th>Title</th>
                         <th>Author</th>
-                        <th>Code</th>
                         <th>Publisher</th>
                         <th>Publishing Year</th>
                         <th>Publishing Place</th>
@@ -46,10 +45,14 @@
 @push('script')
     <script>
         $(function () {
-            /*$("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');*/
+
+            $.getScript("https://www.jqueryscript.net/demo/Delete-Confirmation-Dialog-Plugin-with-jQuery-Bootstrap/bootstrap-confirm-delete.js", function(){
+                $('.delete').bootstrap_confirm_delete({
+                    heading: 'Delete',
+                    message: 'Are you sure you want to delete this record?'
+                });
+            });
+
             $('#example1').DataTable({
                 processing: true,
                 scrollX: true,
@@ -78,7 +81,6 @@
                     {data: 'book_series'},
                     {data: 'title'},
                     {data: 'author'},
-                    {data: 'code'},
                     {data: 'publisher'},
                     {data: 'publishing_year'},
                     {data: 'publishing_place'},
@@ -96,8 +98,7 @@
                     {targets: 5, sortable: true, orderable: true},
                     {targets: 6, sortable: true, orderable: true},
                     {targets: 7, sortable: true, orderable: true},
-                    {targets: 9, sortable: true, orderable: true},
-                    {targets: 10, orderable: false, searchable: false, width: '10%', className: 'center action'}
+                    {targets: 8, orderable: false, searchable: false, width: '10%', className: 'center action'}
                 ],
             });
         });

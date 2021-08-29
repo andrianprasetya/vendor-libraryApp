@@ -29,6 +29,10 @@
                         <label>Nama:</label>
                         <input type="text" class="form-control" name="name" required>
                     </div>
+                    <div class="form-group">
+                        <label>Kelas:</label>
+                        <input type="text" class="form-control" name="kelas" required>
+                    </div>
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
