@@ -23,6 +23,7 @@ class CreateCodeBooksTable extends Migration
             $table->string('collection')->nullable();
             $table->string('location')->nullable();
             $table->boolean('is_loan')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

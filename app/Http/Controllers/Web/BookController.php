@@ -250,12 +250,12 @@ class BookController extends Controller
 
             $existingCode = CodeBook::query()->where('pattern_book_id', $request->code);
             $countExistingCode = $existingCode != null ? $existingCode->count() : 0;
-
             if ($countExistingCode > 0) {
                 $modelExistingCode = $existingCode->first();
                 $maxSequenceExistingBook = Book::query()->where('id', $modelExistingCode->book_id)->max('sequence');
                 $modelExistingBook = Book::query()->where('id', $modelExistingCode->book_id)->where('sequence', $maxSequenceExistingBook)->first();
-                $defaultExistingTotalItem = $modelExistingBook->total_item;
+
+                $defaultExistingTotalItem = !empty($modelExistingBook) ?  $modelExistingBook->total_item : 0;
             }
             $book = Book::query()->create([
                 'title' => $request->title,

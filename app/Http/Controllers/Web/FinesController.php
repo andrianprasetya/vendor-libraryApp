@@ -112,23 +112,25 @@ class FinesController extends Controller
 
             $conditions = '1 = 1';
 
-            $countAll = Loan::query()->count();
-            $paginate = Loan::query()->select('*')
+            $countAll = Fines::query()->count();
+            $paginate = Fines::query()->select('*')
                 ->whereRaw($conditions)
                 ->orderBy($columnName, $columnSortOrder)
                 ->paginate($limit, ["*"], 'page', $page);
             $items = array();
 
             foreach ($paginate->items() as $idx => $row) {
-dd($row->loan);
                 $items[] = array(
                     "no" => 1 + $idx . ".",
                     "id" => $row->id,
-                    "title" => $row->student->name,
-                    "loan" => $row->loan->book_id->title,
+                    "nis" => $row->student->nis,
                     "name" => $row->student->name,
+                    "tgl_peminjaman" => $row->loan->tgl_peminjaman,
                     "late" => $row->late,
-                    "object" => $row->object == 0 ? 'Uang' : 'Buku'
+                    "jenis_denda" => $row->object == 0 ? 'Uang' : 'Buku',
+                    'tgl_pengembalian' => $row->loan->tgl_pengembalian,
+                    'nominal' => $row->nominal,
+                    'book' => $row->book ? $row->book->title : null
                 );
             }
             $response = array(

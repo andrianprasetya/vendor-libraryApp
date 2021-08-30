@@ -56,8 +56,6 @@ class User extends Authenticatable
         'birthday',
         'no_telp',
         'institution',
-        'email',
-        'password',
         'image'
     ];
 

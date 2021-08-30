@@ -15,7 +15,9 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class LoanController extends Controller
 {
@@ -160,8 +162,12 @@ class LoanController extends Controller
         DB::beginTransaction();
 
         try {
-            dd($request->all());
-            foreach ($request->books as $book) {
+            $user = User::query()->where('id', $request->siswa_id)->first();
+
+            $book_list = "";
+            $tgl_pinjam = "";
+            $tgl_kembali = "";
+            foreach ($request->books as $key => $book) {
                 Loan::query()->create([
                     'book_id' => $book['id'],
                     'siswa_id' => $request->siswa_id,
@@ -170,12 +176,30 @@ class LoanController extends Controller
                     'deadline' => $book['deadline'],
                 ]);
 
-                $codeBook = CodeBook::query()->where('book_id', $book['id'])->where('code', $book['code'])->first();
+                $tgl_pinjam = $book['date_loan'];
+                $tgl_kembali = $book['deadline'];
+                $bookData = Book::query()->where('id', $book['id'])->first();
 
+                if ($key > 0) {
+                    $book_list = $book_list . "," . $bookData->title.' - '.$book['code'];
+                } else {
+                    $book_list = $bookData->title.' - '.$book['code'];
+                }
+                $codeBook = CodeBook::query()->where('book_id', $book['id'])->where('code', $book['code'])->first();
                 $codeBook->update([
                     'is_loan' => true
                 ]);
             }
+
+            $to_name = $user->name;
+            $to_email = $user->email;
+            $data = array('name' => $user->name, "kelas" => $user->kelas, "title" => $book_list, 'tgl_pinjam' => $tgl_pinjam, 'tgl_kembali' => $tgl_kembali);
+            Mail::send($this->view . '.email.mail', $data, function ($message) use ($to_name, $to_email) {
+                $message->to($to_email, $to_name)
+                    ->subject('Peminjaman Buku');
+                $message->from(env('MAIL_USERNAME'), 'Peminjaman Buku SMA Angkasa');
+            });
+
             DB::commit();
 
             return redirect()->route($this->route . '.index');
@@ -190,9 +214,9 @@ class LoanController extends Controller
     public function show($id)
     {
         try {
-
             $breadcrumb = $this->breadcrumbs($this->breadcrumb . '<li class="breadcrumb-item active">' . 'Pengembalian Buku' . '</li>');
             $data = Loan::query()->findOrFail($id);
+
             $date1 = $data->deadline;
             $date2 = Carbon::now('Asia/Jakarta')->toIso8601String();
 
@@ -257,7 +281,19 @@ class LoanController extends Controller
                 'deadline' => $request->extend_time,
             ]);
 
-            $e = Extend::query()->create([
+
+            $validator = Validator::make($request->all(), [
+                'extend_time' => 'after:' . $request->due_date
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->route($this->route . '.extend', $id)
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            Extend::query()->create([
                 'loan_id' => $request->loan_id,
                 'siswa_id' => $request->siswa_id,
                 'due_date_before' => $request->due_date,

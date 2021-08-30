@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Extend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -28,16 +29,53 @@ class ExtraController extends Controller
         $breadcrumb = $this->breadcrumbs($br);
         return view($this->view . '.index', compact('breadcrumb'));
     }
-    public function create()
+
+    public function getDatatable(Request $request)
     {
         try {
-            $breadcrumb = $this->breadcrumbs($this->breadcrumb . '<li class="active breadcrumb-item">' . 'Mulai Pengembalian' . '</li>');
-            return view($this->view . '.create', compact('breadcrumb'));
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            abort(500);
-        }
+            $draw = $request->input('draw');
+            $start = $request->input('start');
+            $length = $request->input('length');
+            $page = (int)$start > 0 ? ($start / $length) + 1 : 1;
+            $limit = (int)$length > 0 ? $length : 10;
+            $columnIndex = $request->input('order')[0]['column'];
+            $columnName = $request->input('columns')[$columnIndex]['data'];
+            $columnSortOrder = $request->input('order')[0]['dir'];
 
+            $conditions = '1 = 1';
+
+            $countAll = Extend::query()->count();
+            $paginate = Extend::query()->select('*')
+                ->whereRaw($conditions)
+                ->orderBy($columnName, $columnSortOrder)
+                ->paginate($limit, ["*"], 'page', $page);
+            $items = array();
+
+            foreach ($paginate->items() as $idx => $row) {
+                $items[] = array(
+                    "no" => 1 + $idx . ".",
+                    "id" => $row->id,
+                    "nis" => $row->student->nis,
+                    "name" => $row->student->name,
+                    "book" => $row->loan->book->title,
+                    "loan_date" => $row->loan->tgl_peminjaman,
+                    "due_date_before" => $row->due_date_before,
+                    "due_date_after" => $row->due_date_after
+
+                );
+            }
+            $response = array(
+                "draw" => (int)$draw,
+                "recordsTotal" => (int)$countAll,
+                "recordsFiltered" => (int)$paginate->total(),
+                "data" => $items
+            );
+            return response()->json($response);
+
+        } catch (\Exception $e) {
+            Log::error($e->getMessage() . " - " . $e->getFile() . " - " . $e->getLine());
+            abort(404);
+        }
     }
 
     /**

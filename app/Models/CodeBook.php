@@ -4,10 +4,11 @@ namespace App\Models;
 
 use App\Traits\UuidModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CodeBook extends Model
 {
-    use UuidModel;
+    use UuidModel , SoftDeletes;
 
     public $table = 'code_books';
 

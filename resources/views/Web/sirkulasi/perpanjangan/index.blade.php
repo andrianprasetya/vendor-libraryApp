@@ -19,30 +19,20 @@
                 {{--<a href="{{ route($route.'.create') }}" class="btn btn-primary">Tambah Anggota</a>--}}
             </div>
             <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped display nowrap" style="width:100%">
+                <table id="perpanjangan" class="table table-bordered table-striped" style="width:100%">
                     <thead>
                     <tr>
                         <th class="d-block d-sm-none">Id</th>
                         <th>No</th>
-                        <th>NIS</th>
-                        <th>Judul</th>
+                        <th>Nis</th>
                         <th>Nama</th>
-                        <th>Waktu Peminjaman</th>
-                        <th>Waktu Kembali</th>
-                        <th>Extend</th>
+                        <th>Buku</th>
+                        <th>Tanggal Pinjam</th>
+                        <th>Due date Sebelumnya</th>
+                        <th>Perpanjangan</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
             <!-- /.card-body -->
@@ -51,4 +41,48 @@
 
 @endsection
 @push('script')
+    <script>
+        $(function () {
+            $('#perpanjangan').DataTable({
+                serverSide: true,
+                lengthChange: false,
+                fixedColumns: true,
+                autoWidth: true,
+                fixedHeader: {
+                    "header": false,
+                    "footer": false
+                },
+                info: false,
+                responsive: true,
+                ajax: '{!! route($route.".datatables") !!}',
+                columns: [
+                    {
+                        data: 'id',
+                        name: 'id',
+                        width: '5%',
+                        visible: false,
+                        className: 'center'
+                    },
+                    {data: 'no'},
+                    {data: 'nis'},
+                    {data: 'name'},
+                    {data: 'book'},
+                    {data: 'loan_date'},
+                    {data: 'due_date_before'},
+                    {data: 'due_date_after'}
+                ],
+                order: [[0, "asc"]],
+                columnDefs: [
+                    {targets: 0, sortable: false, orderable: false},
+                    {targets: 1, sortable: false, orderable: false, width: '5%', className: 'text-center'},
+                    {targets: 2, sortable: true, orderable: true},
+                    {targets: 3, sortable: true, orderable: true},
+                    {targets: 4, sortable: true, orderable: true},
+                    {targets: 5, sortable: true, orderable: true},
+                    {targets: 6, sortable: true, orderable: true},
+                    {targets: 7, sortable: true, orderable: true},
+                ],
+            });
+        })
+    </script>
 @endpush

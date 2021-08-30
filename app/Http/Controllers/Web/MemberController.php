@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Uuid;
 
 class MemberController extends Controller
@@ -205,6 +206,31 @@ class MemberController extends Controller
 
         try {
 
+            $validator = Validator::make($request->all(), [
+                'nis' => 'required|unique:users',
+                'name' => 'required',
+                'email' => 'required|unique:users',
+                'kelas' => 'required',
+                'password' => 'required',
+                'address' => 'required',
+                'province' => 'required',
+                'regency' => 'required',
+                'district'  => 'required',
+                'code_pos'  => 'required',
+                'birthday'  => 'required',
+                'no_telp'  => 'required|numeric',
+                'institution' => 'required',
+                'image' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->route($this->route . '.create')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+
             $storagePath = "";
             if ($request->hasFile('image')) {
                 foreach ($request->file() as $files) {
@@ -364,6 +390,30 @@ class MemberController extends Controller
         try {
 
             $data = User::query()->findOrFail($id);
+            $validator = Validator::make($request->all(), [
+                'nis' => 'required|unique',
+                'name' => 'required',
+                'email' => 'required|unique',
+                'kelas' => 'required',
+                'password' => 'required',
+                'address' => 'required',
+                'province' => 'required',
+                'regency' => 'required',
+                'district'  => 'required',
+                'code_pos'  => 'required',
+                'birthday'  => 'required',
+                'no_telp'  => 'required|numeric',
+                'institution' => 'required',
+                'image' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->route($this->route . '.edit', $id)
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
 
             if (Storage::exists($data->image)) {
                 Storage::delete($data->image);

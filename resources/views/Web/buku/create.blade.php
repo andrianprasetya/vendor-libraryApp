@@ -113,9 +113,16 @@
                                 </div>
                                 <div class="col-md-2">
                                     <select class="form-control select2bs4" name="collection" required>
-                                        <option value="reference">Reference</option>
-                                        <option value="textbook">Textbook</option>
-                                        <option value="fiction">Fiction</option>
+                                        <option value="Buku Pelajaran Pokok">Buku Pelajaran Pokok</option>
+                                        <option value="Buku Pelajaran Pelengkap">Buku Pelajaran Pelengkap</option>
+                                        <option value="Buku Bacaan">Buku Bacaan</option>
+                                        <option value="Buku Rujukan">Buku Rujukan</option>
+                                        <option value="Terbitan Berkala">Terbitan Berkala</option>
+                                        <option value="Pamflet atau Brosur">Pamflet atau Brosur</option>
+                                        <option value="Media Pendidikan/Media Instruksional">Media Pendidikan/Media Instruksional</option>
+                                        <option value="Multi Media">Multi Media</option>
+                                        <option value="Kliping">Kliping</option>
+                                        <option value="Dokumen Penting">Dokumen Penting</option>
                                     </select>
                                 </div>
                             </div>
@@ -144,6 +151,32 @@
                                 <option value="art original">Art Original</option>
                                 <option value="chart">Chart</option>
                                 <option value="computer software">Computer Software</option>
+                                <option value="Daftar kartu aktivitas">Daftar kartu aktivitas</option>
+                                <option value="Karya seni reproduksi">Karya seni reproduksi</option>
+                                <option value="Braille">Braille</option>
+                                <option value="Bahan kartografi">Bahan kartografi</option>
+                                <option value="Carta">Carta</option>
+                                <option value="Diorama">Diorama</option>
+                                <option value="Sumber elektronik">Sumber elektronik</option>
+                                <option value="Filmstrip">Filmstrip</option>
+                                <option value="Flashcard">Flashcard</option>
+                                <option value="Dolanan">Dolanan</option>
+                                <option value="Kit">Kit</option>
+                                <option value="Manuskrip">Manuskrip</option>
+                                <option value="Bentuk mikro">Bentuk mikro</option>
+                                <option value="Slaid mikroskop">Slaid mikroskop</option>
+                                <option value="Model">Model</option>
+                                <option value="Musik">Musik</option>
+                                <option value="Gambar hidup">Gambar hidup</option>
+                                <option value="Gambar">Gambar</option>
+                                <option value="Realia">Realia</option>
+                                <option value="Slaid">Slaid</option>
+                                <option value="Rekaman suara">Rekaman suara</option>
+                                <option value="Gambar teknik">Gambar teknik</option>
+                                <option value="Teks">Teks</option>
+                                <option value="Mainan">Mainan</option>
+                                <option value="Transparansi">Transparansi</option>
+                                <option value="Rekaman video">Rekaman video</option>
                             </select>
                         </div>
                     </div>
@@ -235,6 +268,9 @@
                             <select class="form-control select2bs4 select-language" name="language" required>
                                 <option value="indonesia">Indonesia</option>
                                 <option value="english">English</option>
+                                <option value="sunda">Sunda</option>
+                                <option value="arab">Arab</option>
+                                <option value="jepang">Jepang</option>
                             </select>
                         </div>
                     </div>

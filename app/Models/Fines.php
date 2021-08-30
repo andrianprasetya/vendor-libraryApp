@@ -50,7 +50,6 @@ class Fines extends Model
     {
         return $this->belongsTo(Book::class, 'book_id','id');
     }
-
     public function loan()
     {
         return $this->belongsTo(Loan::class, 'loan_id','id');

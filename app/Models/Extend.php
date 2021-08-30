@@ -39,4 +39,12 @@ class Extend extends Model
         'due_date_before',
         'due_date_after',
     ];
+
+    public function student(){
+        return $this->belongsTo(User::class, 'siswa_id','id');
+    }
+
+    public function loan(){
+        return $this->belongsTo(Loan::class, 'loan_id','id');
+    }
 }

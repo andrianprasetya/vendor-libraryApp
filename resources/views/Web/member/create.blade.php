@@ -23,23 +23,57 @@
                     @csrf
                     <div class="form-group">
                         <label>NIS:</label>
-                        <input type="text" class="form-control" name="nis" required>
+                        <input type="text" class="form-control {{$errors->has('nis')?'is-invalid':''}}" name="nis">
+                        @if($errors->has('nis'))
+                            <span
+                                class="error invalid-feedback"><strong>{!! $errors->first('nis') !!}</strong></span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label>Nama:</label>
-                        <input type="text" class="form-control" name="name" required>
+                        <input type="text" class="form-control {{$errors->has('name')?'is-invalid':''}}" name="name">
+                        @if($errors->has('name'))
+                            <span
+                                class="error invalid-feedback"><strong>{!! $errors->first('name') !!}</strong></span>
+                        @endif
                     </div>
-                    <div class="form-group">
-                        <label>Kelas:</label>
-                        <input type="text" class="form-control" name="kelas" required>
+                    <div class="form-group row">
+                        <div class="col-md-5">
+                            <label>Kelas:</label>
+                            <select
+                                class="form-control select2bs4 select-class {{$errors->has('kelas')?'is-invalid':''}}"
+                                name="kelas"
+                                style="width: 100%;">
+                                @for($i = 1; $i <= 3; $i++){
+                                <option value="x_ipa_{{$i}}">X IPA {{$i}}</option>
+                                <option value="x_ips_{{$i}}">X IPS {{$i}}</option>
+                                <option value="xi_ipa_{{$i}}">XI IPA {{$i}}</option>
+                                <option value="xi_ips_{{$i}}">XI IPS {{$i}}</option>
+                                <option value="xii_ips_{{$i}}">XII IPS {{$i}}</option>
+                                }
+                                @endfor
+                                @for($i = 1; $i <= 2; $i++){
+                                <option value="xii_ipa_{{$i}}">XII IPA {{$i}}</option>
+                                }
+                                @endfor
+                            </select>
+                            @if($errors->has('kelas'))
+                                <span
+                                    class="error invalid-feedback"><strong>{!! $errors->first('kelas') !!}</strong></span>
+                            @endif
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label>Alamat:</label>
-                                <textarea type="text" class="form-control"
+                                <textarea type="text" class="form-control {{$errors->has('address')?'is-invalid':''}}"
                                           placeholder="Jln. Rancamanyar no.11 Rt 05 Rw 03"
-                                          name="address" required></textarea>
+                                          name="address"></textarea>
+                                @if($errors->has('address'))
+                                    <span
+                                        class="error invalid-feedback"><strong>{!! $errors->first('address') !!}</strong></span>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -47,31 +81,55 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Provinsi:</label>
-                                        <select class="form-control select2bs4 select-province" name="province"
-                                                style="width: 100%;">
+                                        <select
+                                            class="form-control select2bs4 select-province {{$errors->has('province')?'is-invalid':''}}"
+                                            name="province"
+                                            style="width: 100%;">
                                         </select>
+                                        @if($errors->has('province'))
+                                            <span
+                                                class="error invalid-feedback"><strong>{!! $errors->first('province') !!}</strong></span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Kabupaten:</label>
-                                        <select class="form-control select2bs4 select-regency" name="regency"
-                                                style="width: 100%;">
+                                        <select
+                                            class="form-control select2bs4 select-regency {{$errors->has('regency')?'is-invalid':''}}"
+                                            name="regency"
+                                            style="width: 100%;">
                                         </select>
+                                        @if($errors->has('regency'))
+                                            <span
+                                                class="error invalid-feedback"><strong>{!! $errors->first('regency') !!}</strong></span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Kecamatan:</label>
-                                        <select class="form-control select2bs4 select-district" name="district"
-                                                style="width: 100%;">
+                                        <select
+                                            class="form-control select2bs4 select-district {{$errors->has('district')?'is-invalid':''}}"
+                                            name="district"
+                                            style="width: 100%;">
                                         </select>
+                                        @if($errors->has('district'))
+                                            <span
+                                                class="error invalid-feedback"><strong>{!! $errors->first('district') !!}</strong></span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Kode Pos:</label>
-                                        <input type="text" class="form-control" name="code_pos" required>
+                                        <input type="text"
+                                               class="form-control {{$errors->has('code_pos')?'is-invalid':''}}"
+                                               name="code_pos">
+                                        @if($errors->has('code_pos'))
+                                            <span
+                                                class="error invalid-feedback"><strong>{!! $errors->first('code_pos') !!}</strong></span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -102,27 +160,42 @@
                     <div class="form-group">
                         <label>Tanggal Lahir:</label>
                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"
-                                   name="birthday" required/>
+                            <input type="text"
+                                   class="form-control datetimepicker-input {{$errors->has('birthday')?'is-invalid':''}}"
+                                   data-target="#reservationdate"
+                                   name="birthday"/>
                             <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
+                        @if($errors->has('birthday'))
+                            <span
+                                class="error invalid-feedback"><strong>{!! $errors->first('birthday') !!}</strong></span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label>No. Telepon/Handphone:</label>
-
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text" class="form-control" name="no_telp" required>
+                            <input type="text" class="form-control {{$errors->has('no_telp')?'is-invalid':''}}"
+                                   name="no_telp">
+                            @if($errors->has('no_telp'))
+                                <span
+                                    class="error invalid-feedback"><strong>{!! $errors->first('no_telp') !!}</strong></span>
+                            @endif
                         </div>
-                        <!-- /.input group -->
+
                     </div>
                     <div class="form-group">
                         <label>Institusi:</label>
-                        <input type="text" class="form-control" name="institution" required>
+                        <input type="text" class="form-control {{$errors->has('institution')?'is-invalid':''}}"
+                               name="institution">
+                        @if($errors->has('institution'))
+                            <span
+                                class="error invalid-feedback"><strong>{!! $errors->first('institution') !!}</strong></span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <div class="form-group row">
@@ -134,16 +207,29 @@
                                      style="border-radius: 20%; background-position: center center;background-repeat: no-repeat;cursor: pointer;"
                                      data-src="holder.js/200x200?text=upload gambar"
                                      class="img-responsive ">
+                                @if($errors->has('image'))
+                                    <br>
+                                    <span class="text-danger"><strong>{!! $errors->first('image') !!}</strong></span>
+                                @endif
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Email:</label>
-                        <input type="email" class="form-control" name="email" required>
+                        <input type="email" class="form-control {{$errors->has('email')?'is-invalid':''}}" name="email">
+                        @if($errors->has('email'))
+                            <span
+                                class="error invalid-feedback"><strong>{!! $errors->first('email') !!}</strong></span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label>Password:</label>
-                        <input type="password" class="form-control" name="password" required>
+                        <input type="password" class="form-control {{$errors->has('password')?'is-invalid':''}}"
+                               name="password">
+                        @if($errors->has('password'))
+                            <span
+                                class="error invalid-feedback"><strong>{!! $errors->first('password') !!}</strong></span>
+                        @endif
                     </div>
                     <div class="float-sm-right">
                         <input type="submit" class="btn btn-primary" value="Simpan">
@@ -302,6 +388,11 @@
                         };
                     }
                 }
+            });
+            $('.select-class').select2({
+                placeholder: "Pilih Kelas",
+                allowClear: true,
+                theme: 'bootstrap4',
             });
         });
     </script>
