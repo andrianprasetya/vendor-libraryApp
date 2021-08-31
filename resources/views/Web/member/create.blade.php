@@ -45,15 +45,15 @@
                                 name="kelas"
                                 style="width: 100%;">
                                 @for($i = 1; $i <= 3; $i++){
-                                <option value="x_ipa_{{$i}}">X IPA {{$i}}</option>
-                                <option value="x_ips_{{$i}}">X IPS {{$i}}</option>
-                                <option value="xi_ipa_{{$i}}">XI IPA {{$i}}</option>
-                                <option value="xi_ips_{{$i}}">XI IPS {{$i}}</option>
-                                <option value="xii_ips_{{$i}}">XII IPS {{$i}}</option>
+                                <option value="X IPA {{$i}}">X IPA {{$i}}</option>
+                                <option value="X IPS {{$i}}">X IPS {{$i}}</option>
+                                <option value="XI IPA {{$i}}">XI IPA {{$i}}</option>
+                                <option value="XI IPS {{$i}}">XI IPS {{$i}}</option>
+                                <option value="XII IPS {{$i}}">XII IPS {{$i}}</option>
                                 }
                                 @endfor
                                 @for($i = 1; $i <= 2; $i++){
-                                <option value="xii_ipa_{{$i}}">XII IPA {{$i}}</option>
+                                <option value="XII IPA {{$i}}">XII IPA {{$i}}</option>
                                 }
                                 @endfor
                             </select>

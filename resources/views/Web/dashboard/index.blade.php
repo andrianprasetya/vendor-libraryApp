@@ -85,7 +85,8 @@
                 </div>
                 <div class="card-body">
                     <div class="chart">
-                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        <canvas id="barChart"
+                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -119,30 +120,26 @@
     <script>
         $(function () {
             var areaChartData = {
-                labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: ['X IPA 1', 'X IPA 2', 'X IPA 3', 'X IPS 1', 'X IPS 2', 'X IPS 3',
+                    'XI IPA 1', 'XI IPA 2', 'XI IPA 3', 'XI IPS 1', 'XI IPS 2', 'XI IPS 3',
+                    'XII IPA 1', 'XII IPA 2', 'XII IPS 1', 'XII IPS 2', 'XII IPS 3'],
                 datasets: [
                     {
-                        label               : 'Digital Goods',
-                        backgroundColor     : 'rgba(60,141,188,0.9)',
-                        borderColor         : 'rgba(60,141,188,0.8)',
-                        pointRadius          : false,
-                        pointColor          : '#3b8bba',
-                        pointStrokeColor    : 'rgba(60,141,188,1)',
-                        pointHighlightFill  : '#fff',
+                        label: 'Kelas',
+                        backgroundColor: 'rgba(60,141,188,0.9)',
+                        borderColor: 'rgba(60,141,188,0.8)',
+                        pointRadius: false,
+                        pointColor: '#3b8bba',
+                        pointStrokeColor: 'rgba(60,141,188,1)',
+                        pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data                : [28, 48, 40, 19, 86, 27, 90]
+                        data: ['{!! $user_in_kelas[0] !!}', '{!! $user_in_kelas[1] !!}', '{!! $user_in_kelas[2] !!}', '{!! $user_in_kelas[3] !!}',
+                            '{!! $user_in_kelas[4] !!}', '{!! $user_in_kelas[5] !!}', '{!! $user_in_kelas[6] !!}', '{!! $user_in_kelas[7] !!}',
+                            '{!! $user_in_kelas[8] !!}', '{!! $user_in_kelas[9] !!}', '{!! $user_in_kelas[10] !!}', '{!! $user_in_kelas[11] !!}',
+                            '{!! $user_in_kelas[12] !!}', '{!! $user_in_kelas[13] !!}', '{!! $user_in_kelas[14] !!}', '{!! $user_in_kelas[15] !!}',
+                            '{!! $user_in_kelas[16] !!}']
                     },
-                    {
-                        label               : 'Electronics',
-                        backgroundColor     : 'rgba(210, 214, 222, 1)',
-                        borderColor         : 'rgba(210, 214, 222, 1)',
-                        pointRadius         : false,
-                        pointColor          : 'rgba(210, 214, 222, 1)',
-                        pointStrokeColor    : '#c1c7d1',
-                        pointHighlightFill  : '#fff',
-                        pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data                : [65, 59, 80, 81, 56, 55, 40]
-                    },
+
                 ]
             }
 
@@ -152,14 +149,12 @@
             var barChartCanvas = $('#barChart').get(0).getContext('2d')
             var barChartData = $.extend(true, {}, areaChartData)
             var temp0 = areaChartData.datasets[0]
-            var temp1 = areaChartData.datasets[1]
-            barChartData.datasets[0] = temp1
-            barChartData.datasets[1] = temp0
+            barChartData.datasets[0] = temp0
 
             var barChartOptions = {
-                responsive              : true,
-                maintainAspectRatio     : false,
-                datasetFill             : false
+                responsive: true,
+                maintainAspectRatio: false,
+                datasetFill: false
             }
 
             new Chart(barChartCanvas, {
