@@ -79,6 +79,7 @@ class LoanController extends Controller
             $codeBook = CodeBook::query()->where('code', $request->code)->first();
             $book = Book::query()->where('id', $codeBook->book_id)->first();
 
+
             if ($codeBook->is_loan != true) {
                 $items = array(
                     "id" => $book->id,
@@ -111,9 +112,13 @@ class LoanController extends Controller
             $columnIndex = $request->input('order')[0]['column'];
             $columnName = $request->input('columns')[$columnIndex]['data'];
             $columnSortOrder = $request->input('order')[0]['dir'];
+            $searchValue = $request->input('search')['value'];
 
             $conditions = '1 = 1';
 
+            if (!empty($searchValue)) {
+                $conditions .= " AND code ILIKE '%" . trim($searchValue) . "%'";
+            }
             $countAll = Loan::query()->count();
             $paginate = Loan::query()->select('*')
                 ->whereRaw($conditions)
@@ -123,7 +128,7 @@ class LoanController extends Controller
 
             foreach ($paginate->items() as $idx => $row) {
                 $routeReturn = $row->is_returned == true ? "#" : route("web::sirkulasi.peminjaman.show", $row['id']);
-                $routeExtend = Carbon::now('Asia/Jakarta')->toIso8601String() > $row->deadline && $row->is_returned == false ? route("web::sirkulasi.peminjaman.extend", $row['id']) : "#";
+                $routeExtend = Carbon::now('Asia/Jakarta')->toIso8601String() < $row->deadline && $row->is_returned == false ? route("web::sirkulasi.peminjaman.extend", $row['id']) : "#";
                 $action = null;
                 $action .= '<div class="row text-center"><div class="col-md-6">';
                 $action .= '<a href="' . $routeReturn . '" style="margin:10px" class="text-light-blue disabled" data-toggle="tooltip" data-placement="bottom" title="Return"><i class="fas fa-arrow-circle-right"></i></a>';
@@ -328,6 +333,7 @@ class LoanController extends Controller
                 'late' => $request->late,
                 'nominal' => $request->dendaNominal,
                 'object' => 0,
+                'description' => $request->description
             ]);
             DB::commit();
             return redirect()->route($this->route . '.index');
@@ -357,7 +363,8 @@ class LoanController extends Controller
                 'loan_id' => $id,
                 'book_id' => $request->dendaBook,
                 'late' => $request->late,
-                'object' => 1
+                'object' => 1,
+                'description' => $request->description
             ]);
 
             $book = Book::query()->findOrFail($request->dendaBook);

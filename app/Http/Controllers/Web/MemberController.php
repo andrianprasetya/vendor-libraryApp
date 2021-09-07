@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\District;
+use App\Models\Loan;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\Role;
@@ -300,7 +301,13 @@ class MemberController extends Controller
     public function printCard($id)
     {
         try {
+
             $data = User::query()->findOrFail($id);
+
+            $chekLoan = Loan::query()->where('siswa_id',$data->id)->where('is_returned',false)->count();
+            if($chekLoan > 0){
+                return redirect(URL::previous())->with('status', 'User Masih ada Peminjaman');
+            }
             $pdf = PDF::loadView($this->view . '.pdf.card', compact('data', 'initial'))
                 ->setOption('page-width', '320.0')
                 ->setOption('page-height', '180.0')
@@ -391,11 +398,10 @@ class MemberController extends Controller
 
             $data = User::query()->findOrFail($id);
             $validator = Validator::make($request->all(), [
-                'nis' => 'required|unique',
+                'nis' => 'required|unique:users,nis,'.$id,
                 'name' => 'required',
-                'email' => 'required|unique',
+                'email' => 'required|unique:users,email,'.$id,
                 'kelas' => 'required',
-                'password' => 'required',
                 'address' => 'required',
                 'province' => 'required',
                 'regency' => 'required',
@@ -404,7 +410,6 @@ class MemberController extends Controller
                 'birthday'  => 'required',
                 'no_telp'  => 'required|numeric',
                 'institution' => 'required',
-                'image' => 'required'
             ]);
 
             if ($validator->fails()) {
@@ -414,18 +419,18 @@ class MemberController extends Controller
                     ->withInput();
             }
 
-
-            if (Storage::exists($data->image)) {
-                Storage::delete($data->image);
-            }
-
             $storagePath = "";
             if ($request->hasFile('image')) {
+
+                if (Storage::exists($data->image)) {
+                    Storage::delete($data->image);
+                }
+
                 foreach ($request->file() as $files) {
                     $path = 'public/images';
                     $storagePath = Storage::disk()->put($path, $files);
                 }
-
+            }
                 $data->update([
                     'nis' => $request->nis,
                     'name' => $request->name,
@@ -436,15 +441,13 @@ class MemberController extends Controller
                     'district_id' => $request->district,
                     'code_pos' => $request->code_pos,
                     'gender' => $request->gender,
-                    'birthday' => date('d-m-Y', strtotime($request->birthday)),
+                    'birthday' => $request->birthday,
                     'no_telp' => $request->no_telp,
                     'institution' => $request->institution,
                     'email' => $request->email,
-                    'password' => $request->password,
-                    'image' => $storagePath,
+                    'password' => $request->password != null ? $request->password : $data->password,
+                    'image' => $storagePath != null ? $storagePath : $data->image,
                 ]);
-
-            }
             DB::commit();
 
             return redirect()->route($this->route . '.index');

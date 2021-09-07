@@ -46,6 +46,9 @@
     <script>
         $(function () {
             $('#peminjaman').DataTable({
+                language: {
+                    searchPlaceholder: "Code Book"
+                },
                 serverSide: true,
                 lengthChange: false,
                 fixedColumns: true,

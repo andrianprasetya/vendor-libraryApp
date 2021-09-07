@@ -57,5 +57,13 @@ class OpacController extends Controller
         }
     }
 
+    public function detail($id)
+    {
+        $br = '<li class="active breadcrumb-item">' . ' list ' . $this->menu . '</li>';
+        $breadcrumb = $this->breadcrumbs($br);
+        $data = Book::query()->findOrFail($id);
+        return view($this->view . '.detail', compact('breadcrumb', 'data'));
+    }
+
 
 }

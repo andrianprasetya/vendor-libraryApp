@@ -123,12 +123,11 @@ class BookController extends Controller
 
             $countAll = CodeBook::query()->count();
             $paginate = CodeBook::query()->select('*')
-                ->where('book_id',$request->book_id)
-                ->whereRaw($conditions)
-                ->paginate($limit, ["*"], 'page', $page);
-            $items = array();
+                ->where('book_id', $request->book_id)
+                ->whereRaw($conditions);
 
-            foreach ($paginate->items() as $idx => $row) {
+            $items = array();
+            foreach ($paginate->get() as $idx => $row) {
                 $items[] = array(
                     "id" => $row->id,
                     'code' => $row->code,
@@ -136,10 +135,11 @@ class BookController extends Controller
                     'collection' => $row->collection,
                 );
             }
+
             $response = array(
                 "draw" => (int)$draw,
                 "recordsTotal" => (int)$countAll,
-                "recordsFiltered" => (int)$paginate->total(),
+                "recordsFiltered" => (int)$paginate->count(),
                 "data" => $items
             );
             return response()->json($response);
@@ -248,14 +248,16 @@ class BookController extends Controller
                 $FilePath = Storage::disk()->put($path, $request->file('file'));
             }
 
+            $sequence = Book::query()->whereHas('code_book',function ($q) use ($request){
+               $q->where('code_books.pattern_book_id',$request->code);
+            })->count();
             $existingCode = CodeBook::query()->where('pattern_book_id', $request->code);
             $countExistingCode = $existingCode != null ? $existingCode->count() : 0;
             if ($countExistingCode > 0) {
                 $modelExistingCode = $existingCode->first();
                 $maxSequenceExistingBook = Book::query()->where('id', $modelExistingCode->book_id)->max('sequence');
                 $modelExistingBook = Book::query()->where('id', $modelExistingCode->book_id)->where('sequence', $maxSequenceExistingBook)->first();
-
-                $defaultExistingTotalItem = !empty($modelExistingBook) ?  $modelExistingBook->total_item : 0;
+                $defaultExistingTotalItem = !empty($modelExistingBook) ? $modelExistingBook->total_item : 0;
             }
             $book = Book::query()->create([
                 'title' => $request->title,
@@ -276,7 +278,7 @@ class BookController extends Controller
                 'image' => $ImagePath,
                 'file' => $FilePath,
                 'slug_file' => $nameFile,
-                'sequence' => $countExistingCode + 1,
+                'sequence' => $sequence+1,
             ]);
 
             $PatternCode = PatternBook::query()->where('id', '=', $request->code)->first();
@@ -328,6 +330,7 @@ class BookController extends Controller
         try {
             $data = Book::query()->findOrFail($id);
 
+            $differentTotalItem = $data->total_item - $request->total_item;
 
             $ImagePath = "";
             if ($request->hasFile('image')) {
@@ -346,8 +349,10 @@ class BookController extends Controller
                     Storage::delete($data->file);
                 }
                 $path = 'public/pdf';
+                $nameFile = $request->file('file')->getClientOriginalName();
                 $FilePath = Storage::disk()->put($path, $request->file('file'));
-                $data->update(['file' => $FilePath]);
+                $data->update(['file' => $FilePath,
+                    'slug_file' => $nameFile]);
             }
             $data->update([
                 'title' => $request->title,
@@ -355,7 +360,6 @@ class BookController extends Controller
                 'edition' => $request->edition,
                 'code_pattern_id' => $request->code,
                 'total_item' => $request->total_item,
-                'collection' => $request->collection,
                 'location' => $request->location,
                 'gmd' => $request->gmd,
                 'media_type' => $request->media_type,
@@ -369,7 +373,40 @@ class BookController extends Controller
                 'notes' => $request->notes,
             ]);
 
+            $existingCode = CodeBook::query()->where('book_id', $data->id)->first();
 
+            $PatternCode = PatternBook::query()->where('id', '=', $existingCode->pattern_book_id)->first();
+
+            //Jumlah Item Bertambah
+            if ($differentTotalItem < 0) {
+                $length_code = strlen($PatternCode->code);
+
+                $codeLists = CodeBook::query()->where('pattern_book_id', $PatternCode->id)->get();
+                foreach ($codeLists as $codeList) {
+                    $tempCode = substr($codeList->code, $length_code);
+                }
+
+                for ($i = 1; $i <= ($differentTotalItem * -1); $i++) {
+                    $data->codes()->attach($PatternCode, [
+                        'id' => \Webpatser\Uuid\Uuid::generate(4)->string,
+                        'code' => $PatternCode->code . ($i + $tempCode),
+                        'collection' => $request->collection,
+                        'location' => $request->location,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+                }
+            }
+            else if($differentTotalItem > 0){
+                $length_code = strlen($PatternCode->code);
+
+                $codeLists = CodeBook::query()->where('book_id',$data->id)->where('pattern_book_id', $PatternCode->id)->get();
+                foreach ($codeLists as $key=>$codeList) {
+                    $tempCode = substr($codeList->code, $length_code);
+                }
+                $item = CodeBook::query()->where('book_id', $data->id)->where('code', $PatternCode->code.$tempCode)->first();
+                $item->delete();
+            }
             DB::commit();
 
             return redirect()->route($this->route . '.index');
@@ -401,10 +438,11 @@ class BookController extends Controller
             abort(404);
         }
     }
+
     public function destroy($id)
     {
         $item = Book::query()->findOrFail($id);
         $item->delete();
-        return redirect(URL::previous())->with('status','Delete Successfully');
+        return redirect(URL::previous())->with('status', 'Delete Successfully');
     }
 }

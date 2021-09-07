@@ -40,6 +40,7 @@ class Fines extends Model
         'late',
         'nominal',
         'object',
+        'description'
     ];
 
     public function student()

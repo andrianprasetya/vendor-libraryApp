@@ -54,6 +54,9 @@
                 });
             });
             $('#example1').DataTable({
+                language: {
+                    searchPlaceholder: "Name"
+                },
                 processing: true,
                 scrollX: true,
                 serverSide: true,

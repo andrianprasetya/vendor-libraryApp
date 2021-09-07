@@ -63,7 +63,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Nama:</label>
-                            <input type="text" class="form-control" name="name" value="{{$data->name}}" required>
+                            <input type="text" class="form-control" name="name" value="{{$data->name}}" readonly>
                         </div>
                         <div class="row">
                             <div class="col-md-5">
@@ -71,7 +71,7 @@
                                     <label>Alamat:</label>
                                     <textarea type="text" class="form-control"
                                               placeholder="Jln. Rancamanyar no.11 Rt 05 Rw 03"
-                                              name="address" required>{{$data->address}}</textarea>
+                                              name="address" readonly>{{$data->address}}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-7">
@@ -80,7 +80,7 @@
                                         <div class="form-group">
                                             <label>Provinsi:</label>
                                             <select class="form-control select2bs4 select-province" name="province"
-                                                    style="width: 100%;">
+                                                    style="width: 100%;" readonly>
                                                 @foreach($provinces as $key => $province)
                                                     <option
                                                         value="{{$province->id}}" {{in_array($province->id, $listSelectedProvince ?: []) ? 'selected': ''}}>
@@ -94,7 +94,7 @@
                                         <div class="form-group">
                                             <label>Kabupaten:</label>
                                             <select class="form-control select2bs4 select-regency" name="regency"
-                                                    style="width: 100%;">
+                                                    style="width: 100%;" readonly>
                                                 @foreach($regencies as $key => $regency)
                                                     <option
                                                         value="{{$regency->id}}" {{in_array($regency->id, $listSelectedRegency ?: []) ? 'selected': ''}}>
@@ -108,7 +108,7 @@
                                         <div class="form-group">
                                             <label>Kecamatan:</label>
                                             <select class="form-control select2bs4 select-district" name="district"
-                                                    style="width: 100%;">
+                                                    style="width: 100%;" readonly>
                                                 @foreach($districts as $key => $district)
                                                     <option
                                                         value="{{$district->id}}" {{in_array($district->id, $listSelectedDistrict ?: []) ? 'selected': ''}}>
@@ -121,7 +121,7 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Kode Pos:</label>
-                                            <input type="text" class="form-control" name="code_pos" value="{{$data->code_pos}}" required>
+                                            <input type="text" class="form-control" name="code_pos" value="{{$data->code_pos}}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +133,7 @@
                             <div style="margin-left: 20px;">
                                 <div class="row">
                                     <div class="icheck-primary d-inline">
-                                        <input type="radio" id="radioPrimary1" name="gender" value="L" {{$data->gender == "L" ? 'checked' : ''}}>
+                                        <input type="radio" id="radioPrimary1" name="gender" value="L" {{$data->gender == "L" ? 'checked' : ''}} readonly>
                                         <label for="radioPrimary1">
                                             Laki Laki
                                         </label>
@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="icheck-primary d-inline">
-                                        <input type="radio" id="radioPrimary2" name="gender" value="P" {{$data->gender == "P" ? 'checked' : ''}}>
+                                        <input type="radio" id="radioPrimary2" name="gender" value="P" {{$data->gender == "P" ? 'checked' : ''}} readonly>
                                         <label for="radioPrimary2">
                                             Perempuan
                                         </label>
@@ -153,7 +153,7 @@
                             <label>Tanggal Lahir:</label>
                             <div class="input-group date" id="reservationdate" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"
-                                       name="birthday" value="{{$data->birthday}}" required/>
+                                       name="birthday" value="{{$data->birthday}}" readonly/>
                                 <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -166,17 +166,17 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input type="text" class="form-control" name="no_telp" value="{{$data->no_telp}}" required>
+                                <input type="text" class="form-control" name="no_telp" value="{{$data->no_telp}}" readonly>
                             </div>
                             <!-- /.input group -->
                         </div>
                         <div class="form-group">
                             <label>Institusi:</label>
-                            <input type="text" class="form-control" name="institution" value="{{$data->institution}}" required>
+                            <input type="text" class="form-control" name="institution" value="{{$data->institution}}" readonly>
                         </div>
                         <div class="form-group">
                             <label>Email:</label>
-                            <input type="email" class="form-control" name="email" value="{{$data->email}}" required>
+                            <input type="email" class="form-control" name="email" value="{{$data->email}}" readonly>
                         </div>
                         <input type="button" class="btn btn-primary" data-toggle="modal"
                                data-target="#modal-generator" value="Change Password">

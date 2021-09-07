@@ -115,6 +115,9 @@
                         $('#nis').val(data.nis);
                         $('#name').val(data.name);
                         $('#registered_date').val(data.created_at);
+                    },
+                    error: function (data) {
+                        alert("User Tidak ada");
                     }
                 });
             });
@@ -139,56 +142,59 @@
 
                             addRow(data.id, data.code, data.title, data.date_loan, data.deadline);
                         } else {
-                        alert("Buku sedang di pinjam");
+                            alert("Buku sedang di pinjam");
+                        }
+                    },
+                    error: function (data) {
+                        alert("Buku Tidak ada");
                     }
-                },
-                error: function (data){
-                    alert("Buku Tidak ada");
-                }
+                });
             });
-        });
         })
         ;
 
         function addRow(book_id, code, title, date_loan, deadline) {
-
             if (idBook.includes(code) == true) {
-                alert("Has added")
+                alert("Has added");
             } else {
-                idBook[count] = code;
-                var append = "<tr class='tr-book' style='display: none'>" +
-                    "<td>" +
-                    "<input class='form-control hidden_id' type=\"hidden\" style='width: 100%' value='" + book_id + "' name=\"books[" + count + "][id]\">" +
-                    "<span readonly type=\"text\" style='width: 100%' >" + code + "</span>" +
-                    "<input class='form-control hidden_code' type=\"hidden\" style='width: 100%' value='" + code + "' name=\"books[" + count + "][code]\">" +
-                    "</td>" +
-                    "<td>" +
-                    "<span readonly type=\"text\" style='width: 100%' >" + title + "</span>" +
-                    "<input class='form-control hidden_title' type=\"hidden\" style='width: 100%' value='" + title + "' name=\"books[" + count + "][title]\">" +
-                    "</td>" +
-                    "<td>" +
-                    "<span readonly type=\"text\" style='width: 100%'>" + date_loan + "</span>" +
-                    "<input class='form-control hidden_date_loan' type=\"hidden\" style='width: 100%' value='" + date_loan + "' name=\"books[" + count + "][date_loan]\">" +
-                    "</td>" +
-                    "<td>" +
-                    "<span readonly type=\"text\" style='width: 100%'>" + deadline + "</span>" +
-                    "<input class='form-control hidden_deadline' type=\"hidden\" style='width: 100%' value='" + deadline + "' name=\"books[" + count + "][deadline]\">" +
-                    "</td>" +
-                    "<td>" +
-                    "<a><center><i style=\"color: indianred\" onclick=\"deleteRow(this)\" class=\"far fa-times-circle\"></i></center></a>" +
-                    "</td>" +
-                    "</tr>";
-                $("#table-body").append(append);
-                $(".tr-book").show('slow');
-                count++;
+                if (idBook.length == 2) {
+                    alert("Loan Can't More add again");
+                } else {
+                    idBook[count] = code;
+                    var append = "<tr class='tr-book' style='display: none'>" +
+                        "<td>" +
+                        "<input class='form-control hidden_id' type=\"hidden\" style='width: 100%' value='" + book_id + "' name=\"books[" + count + "][id]\">" +
+                        "<span readonly type=\"text\" style='width: 100%' >" + code + "</span>" +
+                        "<input class='form-control hidden_code' type=\"hidden\" style='width: 100%' value='" + code + "' name=\"books[" + count + "][code]\">" +
+                        "</td>" +
+                        "<td>" +
+                        "<span readonly type=\"text\" style='width: 100%' >" + title + "</span>" +
+                        "<input class='form-control hidden_title' type=\"hidden\" style='width: 100%' value='" + title + "' name=\"books[" + count + "][title]\">" +
+                        "</td>" +
+                        "<td>" +
+                        "<span readonly type=\"text\" style='width: 100%'>" + date_loan + "</span>" +
+                        "<input class='form-control hidden_date_loan' type=\"hidden\" style='width: 100%' value='" + date_loan + "' name=\"books[" + count + "][date_loan]\">" +
+                        "</td>" +
+                        "<td>" +
+                        "<span readonly type=\"text\" style='width: 100%'>" + deadline + "</span>" +
+                        "<input class='form-control hidden_deadline' type=\"hidden\" style='width: 100%' value='" + deadline + "' name=\"books[" + count + "][deadline]\">" +
+                        "</td>" +
+                        "<td>" +
+                        "<a><center><i style=\"color: indianred\" onclick=\"deleteRow(this)\" class=\"far fa-times-circle\"></i></center></a>" +
+                        "</td>" +
+                        "</tr>";
+                    $("#table-body").append(append);
+                    $(".tr-book").show('slow');
+                    count++;
+                }
             }
         }
 
         function deleteRow(elem) {
             var row = $(elem).closest("tr");
-            var book_id = row.find(".hidden_id").val();
+            var code_id = row.find(".hidden_code").val();
             var table = $('#peminjaman');
-            var index = idBook.indexOf(book_id);
+            var index = idBook.indexOf(code_id);
             idBook.splice(index, 1);
             if (count !== 1) {
                 count--;

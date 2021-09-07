@@ -40,6 +40,9 @@
     <script>
         $(function () {
            $('#example1').DataTable({
+               language: {
+                   searchPlaceholder: "GMD"
+               },
                 processing: true,
                 scrollX: true,
                 serverSide: true,

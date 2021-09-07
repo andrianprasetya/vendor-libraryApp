@@ -24,6 +24,7 @@ class CreateFinesTable extends Migration
             $table->integer('late')->nullable()->comment('Hari / Day');
             $table->integer('nominal')->nullable();
             $table->integer('object')->nullable()->comment('0 => Money, 1 => Book');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

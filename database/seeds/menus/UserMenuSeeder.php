@@ -80,7 +80,7 @@ class UserMenuSeeder extends Seeder
             'icon' => 'fas fa-book nav-icon',
             'slug' => 'web/book',
         ]);
-            foreach ($roles as $role) {
+            foreach ($role_petugas_layanan_teknis as $role) {
                 $menuData->roles()->attach($role, [
                     'id' => \Webpatser\Uuid\Uuid::generate(4)->string,
                     'accesses' => implode(config('access.delimiter'), config('access.menu.' . $menuData->slug . '.action')),

@@ -102,6 +102,7 @@ Route::group(['as' => 'web::', 'prefix' => 'web', 'namespace' => 'Web', 'middlew
     Route::group(['as' => 'opac.', 'prefix' => 'opac'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'OpacController@index']);
         Route::get('getBook', ['as' => 'getBook', 'uses' => 'OpacController@getBook']);
+        Route::get('detail/{id}', ['as' => 'detail', 'uses' => 'OpacController@detail']);
     });
 
     Route::group(['as' => 'profile.', 'prefix' => 'profile'], function () {
@@ -115,7 +116,7 @@ Route::group(['as' => 'web::', 'prefix' => 'web', 'namespace' => 'Web', 'middlew
     Route::group(['as' => 'report.', 'prefix' => 'report'], function () {
         Route::get('member', ['as' => 'member', 'uses' => 'ReportController@reportMember']);
         Route::get('datatableReportMembers', ['as' => 'datatableReportMembers', 'uses' => 'ReportController@getDatatableMember']);
-        Route::get('detail-member', ['as' => 'detail-member', 'uses' => 'ReportController@detailMember']);
+        Route::get('detail-member/{id}', ['as' => 'detail-member', 'uses' => 'ReportController@detailMember']);
         Route::get('datatableDetailMemberReports', ['as' => 'datatableDetailMemberReports', 'uses' => 'ReportController@getDatatableDetailMember']);
         Route::get('collection', ['as' => 'collection', 'uses' => 'ReportController@reportCollection']);
         Route::get('datatableReportCollectiones', ['as' => 'datatableReportCollectiones', 'uses' => 'ReportController@getDatatableCollection']);

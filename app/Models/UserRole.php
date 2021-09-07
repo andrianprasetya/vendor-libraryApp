@@ -33,4 +33,8 @@ class UserRole extends Model
     protected $keyType = 'string';
 
     protected $fillable = ['user_id', 'role_id'];
+
+    public function role(){
+        return $this->hasOne(Role::class,'role_id','id');
+    }
 }

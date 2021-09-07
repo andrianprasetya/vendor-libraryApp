@@ -94,7 +94,6 @@
                                     <thead>
                                     <tr>
                                         <th class="d-block d-sm-none">Id</th>
-                                        <th class="text-center">Action</th>
                                         <th>Code</th>
                                         <th>Collection</th>
                                         <th>Location</th>
@@ -246,7 +245,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <input type="file" class="invisible" name="image" id="image" value="{{$data->image}}"
                                    placeholder="{!! trans('label.image') !!}" accept="image/*">
                             <img id="preview-image"
@@ -272,7 +271,6 @@
                                 @else
                                     <center><i class="fa fa-5x fa-plus-circle"></i></center>
                                 @endif
-                                <center><i class="fa fa-5x fa-plus-circle"></i></center>
                             </div>
                         </div>
                         <input type="file" name="file" class="hidden input-document" accept="application/*">
@@ -285,60 +283,6 @@
             <!-- /.card-body -->
         </div>
 
-        <div class="modal fade" id="modal-generator">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <form action="{{route('web::book.pattern_book')}}" method="post">
-                        @csrf
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group row">
-                                <div class="col-sm-3">
-                                    <label>Prefix</label>
-                                </div>
-                                <div class="col-sm-1">
-                                    <label>:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="prefix" id="prefix">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-3">
-                                    <label>Length Serial number</label>
-                                </div>
-                                <div class="col-sm-1">
-                                    <label>:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <input type="number" class="form-control" name="length" id="length">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-1">
-                                    <label>Preview</label>
-                                </div>
-                                <div class="col-sm-1">
-                                    <label>:</label>
-                                </div>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="code" id="code" readonly>
-                                </div>
-                            </div>
-                            <div class="float-sm-left">
-                                <input type="submit" class="btn btn-primary" value="Save">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
     </section>
 
 @endsection

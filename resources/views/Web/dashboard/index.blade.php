@@ -31,7 +31,6 @@
                 <div class="icon">
                     <i class="fas fa-book"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -46,7 +45,6 @@
                 <div class="icon">
                     <i class="far fa-clock"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -61,7 +59,6 @@
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -75,7 +72,7 @@
             <!-- BAR CHART -->
             <div class="card card-success">
                 <div class="card-header">
-                    <h3 class="card-title">Bar Chart</h3>
+                    <h3 class="card-title">Grafik Anggota</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -97,7 +94,7 @@
             <!-- DONUT CHART -->
             <div class="card card-danger">
                 <div class="card-header">
-
+                    <h3 class="card-title">Grafik Ketersediaan Pustaka</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>

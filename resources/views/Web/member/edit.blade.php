@@ -47,15 +47,21 @@
                                 name="kelas"
                                 style="width: 100%;">
                                 @for($i = 1; $i <= 3; $i++){
-                                <option value="X IPA {{$i}}" {{$data->kelas == 'X IPA '.$i ? 'selected':''}}>X IPA {{$i}}</option>
-                                <option value="X IPS {{$i}}" {{$data->kelas == 'X IPS  '.$i ? 'selected':''}}>X IPS {{$i}}</option>
-                                <option value="XI IPA {{$i}}" {{$data->kelas == 'XI IPA '.$i ? 'selected':''}}>XI IPA {{$i}}</option>
-                                <option value="XI IPS {{$i}}" {{$data->kelas == 'XI IPS '.$i ? 'selected':''}}>XI IPS {{$i}}</option>
-                                <option value="XII IPS {{$i}}" {{$data->kelas == 'XII IPS '.$i ? 'selected':''}}>XII IPS {{$i}}</option>
+                                <option value="X IPA {{$i}}" {{$data->kelas == 'X IPA '.$i ? 'selected':''}}>X
+                                    IPA {{$i}}</option>
+                                <option value="X IPS {{$i}}" {{$data->kelas == 'X IPS  '.$i ? 'selected':''}}>X
+                                    IPS {{$i}}</option>
+                                <option value="XI IPA {{$i}}" {{$data->kelas == 'XI IPA '.$i ? 'selected':''}}>XI
+                                    IPA {{$i}}</option>
+                                <option value="XI IPS {{$i}}" {{$data->kelas == 'XI IPS '.$i ? 'selected':''}}>XI
+                                    IPS {{$i}}</option>
+                                <option value="XII IPS {{$i}}" {{$data->kelas == 'XII IPS '.$i ? 'selected':''}}>XII
+                                    IPS {{$i}}</option>
                                 }
                                 @endfor
                                 @for($i = 1; $i <= 2; $i++){
-                                <option value="XII IPA {{$i}}" {{$data->kelas == 'XII IPA '.$i ? 'selected':''}}>XII IPA {{$i}}</option>
+                                <option value="XII IPA {{$i}}" {{$data->kelas == 'XII IPA '.$i ? 'selected':''}}>XII
+                                    IPA {{$i}}</option>
                                 }
                                 @endfor
                             </select>
@@ -70,7 +76,6 @@
                             <div class="form-group">
                                 <label>Alamat:</label>
                                 <textarea type="text" class="form-control {{$errors->has('address')?'is-invalid':''}}"
-                                          placeholder="Jln. Rancamanyar no.11 Rt 05 Rw 03"
                                           name="address" required>{{$data->address}}</textarea>
                                 @if($errors->has('address'))
                                     <span
@@ -178,7 +183,7 @@
                     <div class="form-group">
                         <label>Tanggal Lahir:</label>
                         <input type="date"
-                               class="form-control datetimepicker-input {{$errors->has('birthday')?'is-invalid':''}}"
+                               class="form-control {{$errors->has('birthday')?'is-invalid':''}}"
                                name="birthday" value="{{$data->birthday}}" required/>
                         @if($errors->has('birthday'))
                             <span
@@ -192,47 +197,52 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text" class="form-control {{$errors->has('no_telp')?'is-invalid':''}}" name="no_telp" value="{{$data->no_telp}}" required>
+                            <input type="text" class="form-control {{$errors->has('no_telp')?'is-invalid':''}}"
+                                   name="no_telp" value="{{$data->no_telp}}" required>
                         </div>
                         @if($errors->has('no_telp'))
                             <span
                                 class="error invalid-feedback"><strong>{!! $errors->first('no_telp') !!}</strong></span>
                     @endif
-                        <!-- /.input group -->
+                    <!-- /.input group -->
                     </div>
                     <div class="form-group">
                         <label>Institusi:</label>
-                        <input type="text" class="form-control {{$errors->has('institution')?'is-invalid':''}}" name="institution" value="{{$data->institution}}"
+                        <input type="text" class="form-control {{$errors->has('institution')?'is-invalid':''}}"
+                               name="institution" value="{{$data->institution}}"
                                required>
                         @if($errors->has('institution'))
                             <span
                                 class="error invalid-feedback"><strong>{!! $errors->first('institution') !!}</strong></span>
                         @endif
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputFile">Foto</label>
-                        <input type="file" class="invisible {{$errors->has('image')?'is-invalid':''}}" name="image" id="image"
-                               value="{{ old('image') }}"
-                               placeholder="{!! trans('label.image') !!}" accept="image/*">
-                        <img id="preview-image"
-                             src="{{ asset(Storage::url($data->image)) }}"
-                             style="border-radius: 10%;background-position: center center;background-repeat: no-repeat;cursor: pointer;"
-                             @if($isEdit)
-                             data-src="holder.js/2=200x200?text=Klik untuk meng-upload gambar"
-                             @else
-                             data-src="holder.js/400x200?text=Belum ada gambar"
-                             @endif
-                             width="300"
-                             height="300"
-                             class="img-responsives">
-                        @if($errors->has('image'))
-                            <span
-                                class="error invalid-feedback"><strong>{!! $errors->first('image') !!}</strong></span>
-                        @endif
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                            <input type="file" class="invisible {{$errors->has('image')?'is-invalid':''}}" name="image"
+                                   id="image"
+                                   value="{{ old('image') }}"
+                                   placeholder="{!! trans('label.image') !!}" accept="image/*">
+                            <img id="preview-image"
+                                 src="{{ asset(Storage::url($data->image)) }}"
+                                 style="border-radius: 10%;background-position: center center;background-repeat: no-repeat;cursor: pointer;"
+                                 @if($isEdit)
+                                 data-src="holder.js/2=200x200?text=Klik untuk meng-upload gambar"
+                                 @else
+                                 data-src="holder.js/400x200?text=Belum ada gambar"
+                                 @endif
+                                 width="300"
+                                 height="300"
+                                 class="img-responsives">
+                            @if($errors->has('image'))
+                                <span
+                                    class="error invalid-feedback"><strong>{!! $errors->first('image') !!}</strong></span>
+                            @endif
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Email:</label>
-                        <input type="email" class="form-control {{$errors->has('email')?'is-invalid':''}}" name="email" value="{{$data->email}}" required>
+                        <input type="email" class="form-control {{$errors->has('email')?'is-invalid':''}}" name="email"
+                               value="{{$data->email}}" required>
                         @if($errors->has('email'))
                             <span
                                 class="error invalid-feedback"><strong>{!! $errors->first('email') !!}</strong></span>
@@ -240,7 +250,8 @@
                     </div>
                     <div class="form-group">
                         <label>Password:</label>
-                        <input type="text" class="form-control {{$errors->has('password')?'is-invalid':''}}" name="password" value="{{$data->password}}" required>
+                        <input type="text" class="form-control {{$errors->has('password')?'is-invalid':''}}"
+                               name="password">
                         @if($errors->has('password'))
                             <span
                                 class="error invalid-feedback"><strong>{!! $errors->first('password') !!}</strong></span>

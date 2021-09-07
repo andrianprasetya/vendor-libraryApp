@@ -152,11 +152,22 @@
                                                     <label>:</label>
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    <input type="text" class="form-control" name="dendaNominal" value="{{$dendaNominal}}"
+                                                    <input type="text" class="form-control" name="dendaNominal"
+                                                           value="{{$dendaNominal}}"
                                                            id="dendaNominal">
                                                 </div>
                                             </div>
-
+                                            <div class="form-group row">
+                                                <div class="col-sm-3">
+                                                    <label>Keterangan</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>:</label>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <textarea class="form-control" name="description"></textarea>
+                                                </div>
+                                            </div>
                                             <div class="float-sm-left">
                                                 <input type="submit" class="btn btn-primary" value="Save">
                                             </div>
@@ -245,6 +256,30 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <div style="margin-left: 20px;">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="icheck-primary d-inline">
+                                                                <input type="radio" id="oldBook" name="jenis_buku"
+                                                                       value="old">
+                                                                <label for="oldBook">
+                                                                    Buku Koleksi
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="icheck-primary d-inline">
+                                                                <input type="radio" id="newBook" name="jenis_buku"
+                                                                       value="new">
+                                                                <label for="newBook">
+                                                                    Buku Baru
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" style="display: none" id="old-book">
                                                 <div class="col-sm-3">
                                                     <label>Denda</label>
                                                 </div>
@@ -258,7 +293,28 @@
                                                     </select>
                                                 </div>
                                             </div>
-
+                                            <div class="form-group row" id="new-book" style="display: none">
+                                                <div class="col-sm-3">
+                                                    <label>Denda</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>:</label>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <a href="{{ route('web::book.create') }}" class="btn btn-primary">Tambah Buku</a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-3">
+                                                    <label>Keterangan</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>:</label>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <textarea class="form-control" name="description"></textarea>
+                                                </div>
+                                            </div>
                                             <div class="float-sm-left">
                                                 <input type="submit" class="btn btn-primary" value="Save">
                                             </div>
@@ -280,6 +336,15 @@
 @push('script')
     <script>
         $(function () {
+            $('#oldBook').on('click', function () {
+                $('#old-book').show('slow');
+                $('#new-book').hide('slow');
+            });
+            $('#newBook').on('click', function () {
+                $('#old-book').hide('slow');
+                $('#new-book').show('slow');
+            });
+
             $('.select-book').select2({
                 placeholder: "Pilih Buku",
                 allowClear: true,

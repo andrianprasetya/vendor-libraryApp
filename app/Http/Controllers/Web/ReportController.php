@@ -34,11 +34,11 @@ class ReportController extends Controller
         return view($this->view . '.member.index', compact('breadcrumb'));
     }
 
-    public function detailMember()
+    public function detailMember($id)
     {
         $br = '<li class="active breadcrumb-item">' . ' list ' . $this->menu . '</li>';
         $breadcrumb = $this->breadcrumbs($br);
-        return view($this->view . '.member.detail', compact('breadcrumb'));
+        return view($this->view . '.member.detail', compact('breadcrumb','id'));
     }
 
     public function getDatatableMember(Request $request)
@@ -55,7 +55,6 @@ class ReportController extends Controller
             $searchValue = $request->input('search')['value'];
 
             $conditions = '1 = 1';
-
             if (!empty($searchValue)) {
                 $conditions .= " AND name ILIKE '%" . trim($searchValue) . "%'";
             }
@@ -64,8 +63,9 @@ class ReportController extends Controller
             $paginate = User::query()->select('*')
                 ->whereHas('roles', function ($q) {
                     $q->where('slug', '=', 'siswa');
-                })
-                ->whereRaw($conditions)
+                })->when(auth()->user()->roles()->first()->slug == 'siswa', function ($q) use ($request) {
+                    return $q->where('id', auth()->user()->id);
+                })->whereRaw($conditions)
                 ->orderBy($columnName, $columnSortOrder)
                 ->paginate($limit, ["*"], 'page', $page);
             $items = array();
@@ -111,22 +111,22 @@ class ReportController extends Controller
             $columnIndex = $request->input('order')[0]['column'];
             $columnName = $request->input('columns')[$columnIndex]['data'];
             $columnSortOrder = $request->input('order')[0]['dir'];
+            $searchValue = $request->input('search')['value'];
 
             $conditions = '1 = 1';
-
+            if (!empty($searchValue)) {
+                $conditions .= " AND code ILIKE '%" . trim($searchValue) . "%'";
+            }
             $countAll = Loan::query()->count();
             $paginate = Loan::query()->select('*')
+                ->where('siswa_id',$request->user_id)
                 ->whereRaw($conditions)
                 ->orderBy($columnName, $columnSortOrder)
                 ->paginate($limit, ["*"], 'page', $page);
             $items = array();
 
             foreach ($paginate->items() as $idx => $row) {
-                $routeAction = $row->is_returned == "t" ? "#" : route("web::sirkulasi.peminjaman.show", $row['id']);
-                $action = null;
-                $action .= '<div class="row text-center"><div class="col-md-6">';
-                $action .= '<a href="' . $routeAction . '" style="margin:10px" class="text-light-blue disabled" data-toggle="tooltip" data-placement="bottom" title="Return"><i class="fas fa-arrow-circle-right"></i></a>';
-                $action .= '</div></div>';
+
                 $items[] = array(
                     "no" => 1 + $idx . ".",
                     "id" => $row->id,
@@ -137,7 +137,6 @@ class ReportController extends Controller
                     "deadline" => $row->deadline,
                     "date_return" => $row->tgl_pengembalian,
                     "is_returned" => $row->is_returned,
-                    "action" => $action
                 );
             }
             $response = array(
@@ -177,7 +176,7 @@ class ReportController extends Controller
             $conditions = '1 = 1';
 
             if (!empty($searchValue)) {
-                $conditions .= " AND name ILIKE '%" . trim($searchValue) . "%'";
+                $conditions .= " AND collection ILIKE '%" . trim($searchValue) . "%'";
             }
             $countAll = Book::query()->count();
             $paginate = Book::query()->selectRaw('collection,count(*) AS total_title,sum(total_item) AS all_item')
@@ -232,7 +231,7 @@ class ReportController extends Controller
             $conditions = '1 = 1';
 
             if (!empty($searchValue)) {
-                $conditions .= " AND name ILIKE '%" . trim($searchValue) . "%'";
+                $conditions .= " AND language ILIKE '%" . trim($searchValue) . "%'";
             }
             $countAll = Book::query()->count();
             $paginate = Book::query()->selectRaw('language,count(*) AS item, sum(total_item) AS total_item')
@@ -287,7 +286,7 @@ class ReportController extends Controller
             $conditions = '1 = 1';
 
             if (!empty($searchValue)) {
-                $conditions .= " AND GMD ILIKE '%" . trim($searchValue) . "%'";
+                $conditions .= " AND gmd ILIKE '%" . trim($searchValue) . "%'";
             }
             $countAll = Book::query()->count();
             $paginate = Book::query()->selectRaw('gmd ,count(*) as title, sum(total_item) as item')

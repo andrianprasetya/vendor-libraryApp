@@ -41,47 +41,63 @@
                 OPAC
             </div>
             <div class="card-body">
-                <form action="{{ route('web::opac.index') }}" method="get">
-                    <div class="form-group row">
-                        <div class="col-md-4">
-                            <select class="form-control select2bs4 select-book" name="search_book" required>
-                            </select>
+                <div class="row">
+                    <div class="col-md-3">
+                        <center>
+                            <img id="preview-image"
+                                 src="{{ asset(\Illuminate\Support\Facades\Storage::url($data->image)) }}"
+                                 style=" background-position: center center;background-repeat: no-repeat;cursor: pointer;"
+                                 data-src="holder.js/200x200?text=upload gambar"
+                                 class="img-responsive"
+                                 width="300"
+                                 height="350"
+                                 alt="{{$data->title}}">
+                        </center>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <h1>Bahasa {{$data->language}}</h1>
                         </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn-default btn" id="find_book"><i class="fa fa-search"></i>
-                            </button>
+                        <div class="form-group">
+                            <h1>{{$data->author}} - {{$data->publisher}}</h1>
+                        </div>
+                        <div class="form-group">
+                            <h1>{{$data->notes}}</h1>
                         </div>
                     </div>
-                </form>
-                <form action="{{ route('web::opac.index') }}" method="get">
-                    <button type="submit" class="btn-danger btn" id="find_book">Reset
-                    </button>
-                </form>
-                <br>
-                @foreach($books as $key => $book)
-                    @if($key / 4 == 1 || $key == 0 )
-                        <div class="row"> @endif
-                            <div class="col-md-2">
-                                <div class="text-center" >
-                                    <img id="preview-image"
-                                         src="{{ asset(\Illuminate\Support\Facades\Storage::url($book->image)) }}"
-                                         style=" background-position: center center;background-repeat: no-repeat;cursor: pointer;"
-                                         data-src="holder.js/200x200?text=upload gambar"
-                                         class="img-responsive"
-                                         width="100"
-                                         height="150"
-                                         alt="{{$book->title}}">
-                                    <br>
-                                    <p class="text-center" >{{$book->title}}</p>
-                                    <a href="{{route('web::opac.detail',$book->id)}}"> Detail</a>
-                                </div>
+                </div>
+                <table border="1" class="table table-bordered table-striped"
+                       style="margin-left: 5%;margin-right: 5%;margin-top: 3%;margin-bottom: 3%; width: 90%">
+                    <tr>
+                        <td style="padding: 5%;">
+                            <div class="form-group">
+                                <h2>Jumlah eksemplar : {{$data->total_item}}</h2>
                             </div>
-                            @if($key / 3 == 1)</div>@endif
-
-                @endforeach
+                            <div class="form-group">
+                                <h2>GMD : {{$data->gmd}}</h2>
+                            </div>
+                            <div class="form-group">
+                                <h2>Kategori : {{$data->collection}}</h2>
+                            </div>
+                            <div class="form-group">
+                                <h2>Lokasi : {{$data->code_book[0]->location}}</h2>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="form-group">
+                    <label class="col-form-label">File</label>
+                    <div class="border-wrapper document-wrapper">
+                        <div class="icon-wrapper">
+                            @if ($data->file)
+                                <center><a href="{{ asset(\Illuminate\Support\Facades\Storage::url($data->file)) }}" class="document-url" target="_blank">{{ $data->slug_file }}</a></center>
+                            @else
+                                <center><i class="fa fa-5x fa-plus-circle"></i></center>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>{{ $books->links() }}</div>
-            <!-- /.card-body -->
         </div>
     </section>
 

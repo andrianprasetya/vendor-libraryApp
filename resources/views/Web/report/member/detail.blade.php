@@ -28,7 +28,6 @@
                         <th>Waktu Peminjaman</th>
                         <th>Waktu Kembali</th>
                         <th>Telah Kembali</th>
-                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody></tbody>
@@ -43,6 +42,9 @@
     <script>
         $(function () {
             $('#peminjaman').DataTable({
+                language: {
+                    searchPlaceholder: "code"
+                },
                 serverSide: true,
                 lengthChange: false,
                 fixedColumns: true,
@@ -51,11 +53,17 @@
                     "header": false,
                     "footer": false
                 },
-                search:false,
-                paging:false,
+                search: false,
+                paging: false,
                 info: false,
                 responsive: true,
-                ajax: '{!! route($route.".datatableDetailMemberReports") !!}',
+                ajax: {
+                    url: '{!! route($route.".datatableDetailMemberReports") !!}',
+                    data: function (data) {
+                        data.user_id = '{!! $id !!}';
+                        return data;
+                    }
+                },
                 columns: [
                     {
                         data: 'id',
@@ -81,8 +89,7 @@
                             }
                             return '<i class="  ' + icon + '"></i>';
                         }
-                    },
-                    {data: 'action'}
+                    }
 
                 ],
                 order: [[0, "asc"]],
@@ -93,8 +100,7 @@
                     {targets: 3, sortable: true, orderable: true},
                     {targets: 4, sortable: true, orderable: true},
                     {targets: 5, sortable: true, orderable: true},
-                    {targets: 6, sortable: true, orderable: true ,  className: 'text-center'},
-                    {targets: 7, sortable: false, orderable: false, width: '5%', className: 'text-center'}
+                    {targets: 6, sortable: true, orderable: true, className: 'text-center'}
                 ],
             });
         })

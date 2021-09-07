@@ -46,6 +46,7 @@
     <script>
         $(function () {
             $('#denda').DataTable({
+                searching:false,
                 serverSide: true,
                 lengthChange: false,
                 fixedColumns: true,
